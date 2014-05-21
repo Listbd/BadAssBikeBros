@@ -25,15 +25,16 @@
     });
 
     commonModule.factory('common',
-        ['$q', '$rootScope', '$timeout', 'commonConfig', 'logger', common]);
+        ['$q', '$http', '$rootScope', '$timeout', 'commonConfig', 'logger', common]);
 
-    function common($q, $rootScope, $timeout, commonConfig, logger) {
+    function common($q, $http, $rootScope, $timeout, commonConfig, logger) {
         var throttles = {};
 
         var service = {
             // common angular dependencies
             $broadcast: $broadcast,
             $q: $q,
+            $http: $http,
             $timeout: $timeout,
             // generic
             activateController: activateController,
@@ -41,8 +42,9 @@
             debouncedThrottle: debouncedThrottle,
             isNumber: isNumber,
             logger: logger, // for accessibility
-            textContains: textContains
-        };
+            textContains: textContains,
+            generateGuid: generateGuid
+    };
 
         return service;
 
@@ -127,5 +129,12 @@
         function textContains(text, searchText) {
             return text && -1 !== text.toLowerCase().indexOf(searchText.toLowerCase());
         }
+
+        // bdl - so that we can get unique urls and avoid caching issues
+        function generateGuid() {
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                   s4() + '-' + s4() + s4() + s4();
+        }
+
     }
 })();

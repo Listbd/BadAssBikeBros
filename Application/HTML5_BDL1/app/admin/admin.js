@@ -7,6 +7,7 @@
     function admin(common, tkService) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
+        var logError = getLogFn(controllerId, 'error');
 
         var vm = this;
         vm.title = 'Admin';

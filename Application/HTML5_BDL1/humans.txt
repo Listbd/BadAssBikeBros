@@ -3,7 +3,8 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Brian List
+    Dean Davidson
 
 # THANKS
 

@@ -24,7 +24,7 @@
 
         function TESTcreateUser()
         {
-            return tkService.createUser("Dude3", "password", "name 3", "dude3@dude3.com", "1")
+            return tkService.createUser("Dude4", "password", "name 4", "dude4@dude4.com", "1")
                 .success(function(response) {
                     common.$timeout(function () {
                         vm.user = response.user;

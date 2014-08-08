@@ -38,14 +38,14 @@
         }
 
         function getUser() {
-            TESTcreateUser();
-            /*
+            //TESTcreateUser();
+            
             // https://csgprohackathonapi.azurewebsites.net/api/users/2
             if (vm.userId && !isNaN(vm.userId)) {
-                return tkService.getUserById(vm.userId)
+                return tkService.getUser(vm.userId)
                     .success(function(response) {
                         common.$timeout(function() {
-                            vm.user = response.user;
+                            vm.user = response.UserName;
                         })
                         return null;
                     }).error(function (error) {
@@ -54,7 +54,7 @@
                         return null;
                     });
             }
-            */
+            
         }
 
 

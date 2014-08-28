@@ -1,0 +1,45 @@
+﻿<!doctype html>
+<html ng-app="app">
+<head>
+    <title>Sleek Peek</title>
+    <link rel="stylesheet" href="Content/bootstrap-theme.css">
+    <link rel="stylesheet" href="Content/bootstrap.css">
+    <link rel="stylesheet" href="Content/ng-grid.css" />
+    <link rel="stylesheet" href="Content/toastr.css" />
+    <link rel="stylesheet" href="Content/customtheme.css" />
+</head>
+<body>
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-route.min.js"></script>
+    <script src="Scripts/angular-resource.min.js"></script>
+    <script src="Scripts/ng-grid.js"></script>
+    <script src="Scripts/toastr.min.js"></script>
+    <script src="Scripts/moment.js"></script>
+
+    <script src="app/common.js"></script>
+    <script src="app/logger.js"></script>
+    <script src="app/app.js?version=1"></script>
+    <script src="app/login.js"></script>
+    <script src="app/projects.js"></script>
+    <script src="app/project.js"></script>
+    <script src="app/timeTracking.js"></script>
+
+    <div class="navbar navbar-default">
+        <a class="logo"></a>
+        <div class="app-title">Sleek Peek</div>
+        <div class="app-title-separator"></div>
+    </div>
+    <section id="content" class="content">
+        <div id="main-wrapper">
+            <div id="main" class="container">
+
+                <div ng-view></div>
+            </div>
+            </div>
+        </section>
+
+
+
+</body>
+</html>

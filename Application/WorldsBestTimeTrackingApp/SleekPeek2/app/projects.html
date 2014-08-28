@@ -1,0 +1,15 @@
+﻿<section id="home" class="mainbar" ng-controller="summary as vm">
+    <div class="form-group">
+        <div class="control-group">
+            <div class="col-lg-4">
+                <h4>Your Projects ({{vm.projects.length}})</h4>
+            </div>
+            <div class="col-lg-12">
+                <div class="tallGridStyle"
+                     ng-grid="vm.projectsDataGrid"
+                     ng-style="vm.dataGridHeight(vm.projects,false)">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -51,13 +51,6 @@
                 });
 
 
-            if (loginModel.Username == 'admin' && loginModel.Password == "rocks") {
-                $location.path('/projects');
-            }
-            else {
-                vm.errorMessage = "Unauthorized";
-            }
-
             //authService.login(loginModel).then(function () {
             //    vm.isCertPrinter = authService.isCertPrinter();
             //    if (authService.isAdmin() || authService.isUser()) {

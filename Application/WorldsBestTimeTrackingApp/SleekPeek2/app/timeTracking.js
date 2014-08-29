@@ -12,7 +12,8 @@
 
         var service = {
             getUser: getUser,
-            getProjects: getProjects
+            getProjects: getProjects,
+            getProject: getProject
         };
         return service;
 
@@ -21,7 +22,7 @@
             //$http.defaults.headers.common.Authorization = 'Basic RHVkZTg6cGFzc3dvcmQ=';
             //return $http.get(getstr, { withCredentials: true });
 
-            var auth = btoa(user + ":" + "password");
+            var auth = btoa(user + ":" + password);
 
             var r = $http({
                 url: getstr,
@@ -45,6 +46,22 @@
             return r;
 
         }
+
+        function getProject(projectId) {
+            var getstr = url + "/Projects/" + projectId + "?format=json&callId=" + common.generateGuid();
+
+            //var auth = btoa(user + ":" + password);
+            auth = btoa("dude:password");
+
+            var r = $http({
+                url: getstr,
+                method: 'GET',
+                headers: { 'Authorization': 'Basic ' + auth } // RHVkZTg6cGFzc3dvcmQ=' }
+            });
+            return r;
+
+        }
+
     }
 
 })();

@@ -39,8 +39,8 @@
             ],
         }
 
-        function goToDetail(connector) {
-            var detailPath = "/connector/" + connector.ConnectorName;
+        function goToDetail(test) {
+            var detailPath = "/project/" + test.ProjectId;
             $location.path(detailPath);
         }
 

@@ -8,9 +8,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['common', '$location', login]);
+        ['common', '$location', 'timeTracking', login]);
 
-    function login(common, $location) {
+    function login(common, $location, timeTracking) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         var vm = this;
 
@@ -41,6 +41,15 @@
                 Password: vm.password,
                 //RememberMe: vm.rememberme
             };
+
+            return timeTracking.getUser(vm.username, vm.password)
+                .success(function (response) {
+                    $location.path('/projects/');
+                    msgSuccess("Welcome Back!");
+                }).error(function (error) {
+                    vm.errorMessage = "Unauthorized";
+                });
+
 
             if (loginModel.Username == 'admin' && loginModel.Password == "rocks") {
                 $location.path('/projects');

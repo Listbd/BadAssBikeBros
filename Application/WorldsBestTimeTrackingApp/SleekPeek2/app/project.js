@@ -4,9 +4,9 @@
     var controllerId = 'project'; // must match... what?
 
     // ??? why can it not find the function when common is passed
-    angular.module('app').controller(controllerId, ['common', 'connectorFactory', '$routeParams', project]);
+    angular.module('app').controller(controllerId, ['common', 'timeTracking', '$routeParams', project]);
 
-    function project(common, connectorFactory, $routeParams) {
+    function project(common, timeTracking, $routeParams) {
         var getMsgFn = common.logger.getLogFn;
         var msg = getMsgFn(controllerId);
         var msgSuccess = getMsgFn(controllerId, 'success');
@@ -17,7 +17,7 @@
 
         vm.formatDate = formatDate;
 
-        vm.connectorLookup = undefined;
+        vm.projectId = undefined;
         if ($routeParams.projectId) {
             vm.projectId = $routeParams.projectId;
         }
@@ -27,22 +27,22 @@
         function activate() {
             var dt = new Date(new Date().getTime() - (24 * 60 * 60 * 1000));
             var from = moment(dt).format("YYYY-MM-DD HH:mm:ss");
-            var promises = [getTasks(vm.projectId)];
+            var promises = [getProject(vm.projectId)];
             common.activateController(promises, controllerId).then(function () { });
 
             //    vm.name = "fiduciary";
         }
 
-        function getConfig(name) {
-            return connectorFactory.getConnectorConfig(name)
+        function getProject(id) {
+            return timeTracking.getProject(id)
                 .success(function (response) {
                     common.$timeout(function () {
-                        vm.connector = response;
+                        vm.project = response;
                     })
                     return null;
                 }).error(function (error) {
                     msgError('Error: ' + error.Message);
-                    vm.connector = undefined;
+                    vm.project = undefined;
                     return null;
                 });
         }

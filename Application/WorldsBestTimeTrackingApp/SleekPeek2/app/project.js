@@ -4,9 +4,9 @@
     var controllerId = 'project'; // must match... what?
 
     // ??? why can it not find the function when common is passed
-    angular.module('app').controller(controllerId, ['common', 'timeTracking', '$routeParams', project]);
+    angular.module('app').controller(controllerId, ['common', 'timeTracking', '$routeParams', '$scope', project]);
 
-    function project(common, timeTracking, $routeParams) {
+    function project(common, timeTracking, $routeParams, $scope) {
         var getMsgFn = common.logger.getLogFn;
         var msg = getMsgFn(controllerId);
         var msgSuccess = getMsgFn(controllerId, 'success');
@@ -38,6 +38,12 @@
                 .success(function (response) {
                     common.$timeout(function () {
                         vm.project = response;
+                        vm.blankRole =
+                        {
+                            'ProjectId' : id,
+                            'Name': '',
+                            'ExternalSystemKey': ''
+                        };
                     })
                     return null;
                 }).error(function (error) {
@@ -45,6 +51,19 @@
                     vm.project = undefined;
                     return null;
                 });
+        }
+
+        $scope.addRole = function (roletoAdd) {
+            timeTracking.postProjectRole(roletoAdd)
+            .success(function (response) {
+                common.$timeout(function () {
+                    getProject(vm.projectId);
+                })
+                return null;
+            }).error(function (error) {
+                msgError('Error: ' + error.Message);
+                return null;
+            });
         }
 
         function getTasks(projectId) {

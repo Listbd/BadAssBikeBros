@@ -13,7 +13,8 @@
         var service = {
             getUser: getUser,
             getProjects: getProjects,
-            getProject: getProject
+            getProject: getProject,
+            postProjectRole: postProjectRole
         };
         return service;
 
@@ -57,6 +58,20 @@
                 url: getstr,
                 method: 'GET',
                 headers: { 'Authorization': 'Basic ' + auth } // RHVkZTg6cGFzc3dvcmQ=' }
+            });
+            return r;
+
+        }
+
+        function postProjectRole(projectRole) {
+            var getstr = url + "/ProjectRoles?format=json&callId=" + common.generateGuid();
+            auth = btoa("dude:password");
+
+            var r = $http({
+                url: getstr,
+                method: 'POST',
+                headers: { 'Authorization': 'Basic ' + auth },
+                data: projectRole
             });
             return r;
 

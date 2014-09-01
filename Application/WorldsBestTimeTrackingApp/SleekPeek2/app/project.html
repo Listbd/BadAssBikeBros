@@ -32,6 +32,7 @@
                                     <th>Name</th>
                                     <th>Id</th>
                                     <th>External Key</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,6 +40,13 @@
                                     <td>{{projectRole.Name}}</td>
                                     <td>{{projectRole.ProjectRoleId}}</td>
                                     <td>{{projectRole.ExternalSystemKey}}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-control" ng-model=vm.blankRole.Name  /></td>
+                                    <td><input class="form-control" readonly="readonly" /></td>
+                                    <td><input class="form-control" ng-model=vm.blankRole.ExternalSystemKey /></td>
+                                    <td><button type="button" class="btn btn-success" ng-click="addRole(vm.blankRole)">Add</button></td>
                                 </tr>
                             </tbody>
                         </table>

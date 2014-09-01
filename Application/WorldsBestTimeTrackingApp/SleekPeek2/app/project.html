@@ -2,15 +2,46 @@
     <form class="form-horizontal">
         <fieldset class="col-sm-12 col-lg-12 col-md-12">
             <div class="form-group" ng-show="vm.project != undefined">
-                <div class="control-group">
-                    <label class="col-md-2 control-label text-left">Name</label>
-                    <div class="col-lg-9 col-md-9">
-                        <input class="form-control darker"
-                               type="text"
-                               id="name"
-                               disabled="disabled"
-                               data-ng-model="vm.project.Name"
-                               autocomplete="off" />
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Project Info</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="control-group">
+                            <label class="col-md-2 control-label text-left">Name</label>
+                            <div class="col-lg-9 col-md-9">
+                                <input class="form-control darker"
+                                       type="text"
+                                       id="name"
+                                       disabled="disabled"
+                                       data-ng-model="vm.project.Name"
+                                       autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Roles</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Id</th>
+                                    <th>External Key</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="projectRole in vm.project.ProjectRoles">
+                                    <td>{{projectRole.Name}}</td>
+                                    <td>{{projectRole.ProjectRoleId}}</td>
+                                    <td>{{projectRole.ExternalSystemKey}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

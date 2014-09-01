@@ -14,7 +14,8 @@
             getUser: getUser,
             getProjects: getProjects,
             getProject: getProject,
-            postProjectRole: postProjectRole
+            postProjectRole: postProjectRole,
+            deleteProjectRole : deleteProjectRole
         };
         return service;
 
@@ -74,7 +75,18 @@
                 data: projectRole
             });
             return r;
+        }
 
+        function deleteProjectRole(projectRoleId) {
+            var getstr = url + "/ProjectRoles/" + projectRoleId + "?format=json&callId=" + common.generateGuid();
+            auth = btoa("dude:password");
+
+            var r = $http({
+                url: getstr,
+                method: 'DELETE',
+                headers: { 'Authorization': 'Basic ' + auth }
+            });
+            return r;
         }
 
     }

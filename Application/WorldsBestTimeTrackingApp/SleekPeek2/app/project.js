@@ -53,15 +53,29 @@
                 });
         }
 
+        // Brian - is it bad form to use $scope. ?  This is how it's done in the documentation / courses
+        // that I have used but it seems like you are doing something different in this project.  What
+        // should I be doing instead of this??
         $scope.addRole = function (roletoAdd) {
             timeTracking.postProjectRole(roletoAdd)
             .success(function (response) {
                 common.$timeout(function () {
+                    // Heavy-handed, but, let's update the project....
                     getProject(vm.projectId);
                 })
                 return null;
             }).error(function (error) {
                 msgError('Error: ' + error.Message);
+                return null;
+            });
+        }
+
+        $scope.deleteRole = function (roleToDelete) {
+            timeTracking.deleteProjectRole(roleToDelete.ProjectRoleId)
+            .success(function (response) {
+                common.$timeout(function () {
+                    getProject(vm.projectId);
+                })
                 return null;
             });
         }

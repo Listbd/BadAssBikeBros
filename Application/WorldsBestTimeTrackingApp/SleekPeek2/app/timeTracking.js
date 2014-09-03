@@ -12,6 +12,7 @@
 
         var service = {
             getUser: getUser,
+            postUser: postUser,
             getProjects: getProjects,
             getProject: getProject,
             postProjectRole: postProjectRole,
@@ -33,6 +34,24 @@
             });
             return r;
         }
+
+        function postUser(user, password) {
+            var poststr = url + "/users?format=json&callId=" + common.generateGuid();
+
+            var userdata = {
+                "Password": password,
+                "UserName": user,
+                "Name": user,
+                "Email": user + "@" + user + ".com",
+                "TimeZoneId": "Pacific Standard Time",
+                "UseStopwatchApproachToTimeEntry": true,
+                "ExternalSystemKey": user
+            };
+
+            var r = $http.post(poststr, userdata);
+            return r;
+        }
+
 
         function getProjects(user, password) {
             var getstr = url + "/Projects?format=json&callId=" + common.generateGuid();
@@ -88,6 +107,7 @@
             });
             return r;
         }
+
 
     }
 

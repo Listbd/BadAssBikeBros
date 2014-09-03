@@ -38,12 +38,17 @@
                            required />
                 </div>
             </div>
-            <div class="form-group">
+            <div class="btn-toolbar">
                 <div class="col-lg-10 col-lg-offset-2">
                     <button class="btn btn-primary"
                             data-ng-click="vm.login()"
                             data-ng-disabled="loginForm.$invalid">
                         Sign In
+                    </button>
+                    <button class="btn btn-success" style="margin-left:42px"
+                            data-ng-click="vm.signup()"
+                            data-ng-disabled="loginForm.$invalid">
+                        Join the Coolness
                     </button>
                 </div>
             </div>

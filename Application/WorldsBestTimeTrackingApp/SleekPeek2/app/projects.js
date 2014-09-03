@@ -3,9 +3,9 @@
 
     var controllerId = 'summary';
 
-    angular.module('app').controller(controllerId, ['common', '$location', 'timeTracking', summary]);
+    angular.module('app').controller(controllerId, ['common', '$location', 'timeTracking', 'authService', summary]);
 
-    function summary(common, $location, timeTracking) {
+    function summary(common, $location, timeTracking, authService) {
         var vm = this;
 
         var getMsgFn = common.logger.getLogFn;
@@ -68,7 +68,15 @@
         }
 
         function getProjects() {
-            return timeTracking.getProjects()
+            var creds = authService.readCredentials();
+            if (creds == 0 || creds.length == 0) {
+                return null;
+            }
+            var credsarray = creds.split(':');
+            var user = creds[0];
+            var pass = creds[1];
+
+            return timeTracking.getProjects(user, pass)
                 .success(function (response) {
                     common.$timeout(function () {
                         var projects = response;

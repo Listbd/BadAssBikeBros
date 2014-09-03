@@ -56,7 +56,7 @@
         // Brian - is it bad form to use $scope. ?  This is how it's done in the documentation / courses
         // that I have used but it seems like you are doing something different in this project.  What
         // should I be doing instead of this??
-        $scope.addRole = function (roletoAdd) {
+        vm.addRole = function (roletoAdd) {
             timeTracking.postProjectRole(roletoAdd)
             .success(function (response) {
                 common.$timeout(function () {
@@ -70,7 +70,7 @@
             });
         }
 
-        $scope.deleteRole = function (roleToDelete) {
+        vm.deleteRole = function (roleToDelete) {
             timeTracking.deleteProjectRole(roleToDelete.ProjectRoleId)
             .success(function (response) {
                 common.$timeout(function () {

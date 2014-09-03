@@ -40,13 +40,13 @@
                                     <td>{{projectRole.Name}}</td>
                                     <td>{{projectRole.ProjectRoleId}}</td>
                                     <td>{{projectRole.ExternalSystemKey}}</td>
-                                    <td><button type="button" class="btn btn-danger" ng-click="deleteRole(projectRole)">Delete</button></td>
+                                    <td><button type="button" class="btn btn-danger" ng-click="vm.deleteRole(projectRole)">Delete</button></td>
                                 </tr>
                                 <tr>
                                     <td><input class="form-control" ng-model=vm.blankRole.Name  /></td>
                                     <td><input class="form-control" readonly="readonly" /></td>
                                     <td><input class="form-control" ng-model=vm.blankRole.ExternalSystemKey /></td>
-                                    <td><button type="button" class="btn btn-success" ng-click="addRole(vm.blankRole)">Add</button></td>
+                                    <td><button type="button" class="btn btn-success" ng-click="vm.addRole(vm.blankRole)">Add</button></td>
                                 </tr>
                             </tbody>
                         </table>

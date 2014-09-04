@@ -30,7 +30,6 @@
         };
 
         function readCredentials() {
-            return "dude:password";
             var decoded = Base64.decode($cookieStore.get('hackauth'));
             //return $cookieStore.get('authdata') + ' ---- ' + decoded;
             return decoded;

@@ -8,9 +8,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['common', '$location', 'timeTracking', login]);
+       ['common', '$location', 'timeTracking', 'authService', login]);
 
-    function login(common, $location, timeTracking) {
+    function login(common, $location, timeTracking, authService) {
         var getMsgFn = common.logger.getLogFn;
         var msg = getMsgFn(controllerId);
         var msgSuccess = getMsgFn(controllerId, 'success');
@@ -32,6 +32,7 @@
         activate();
 
         function activate() {
+            authService.clearCredentials();
             var promises = [];
             common.activateController(promises, controllerId)
                 .then(function () { /*log('Activated View');*/ });
@@ -51,32 +52,20 @@
 
             return timeTracking.getUser(vm.username, vm.password)
                 .success(function (response) {
+                    authService.setCredentials(vm.username, vm.password);
                     $location.path('/projects/');
                     msgSuccess("Welcome Back!");
                 }).error(function (error) {
                     vm.errorMessage = "Unauthorized";
                 });
 
-
-            //authService.login(loginModel).then(function () {
-            //    vm.isCertPrinter = authService.isCertPrinter();
-            //    if (authService.isAdmin() || authService.isUser()) {
-            //        $location.path('/');
-            //    }
-            //    else if (vm.isCertPrinter) {
-            //        $location.url('/certprint');
-            //        $location.path('/certprint');
-            //    }
-            //}, function (error) {
-            //    vm.isProcessing = false;
-            //    vm.errorMessage = error.data.ResponseStatus.Message;
-            //});
         }
 
         function signup() {
             return timeTracking.postUser(vm.username, vm.password)
                 .success(function (response) {
                     msgSuccess("Welcome to Time Tracking Paradise");
+                    authService.setCredentials(vm.username, vm.password);
                     $location.path('/projects/');
                 }).error(function (error) {
                     msgError(error);

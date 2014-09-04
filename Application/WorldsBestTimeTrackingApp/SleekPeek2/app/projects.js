@@ -73,8 +73,8 @@
                 return null;
             }
             var credsarray = creds.split(':');
-            var user = creds[0];
-            var pass = creds[1];
+            var user = credsarray[0];
+            var pass = credsarray[1];
 
             return timeTracking.getProjects(user, pass)
                 .success(function (response) {
@@ -94,27 +94,6 @@
 
         }
 
-
-        function getSummary() {
-            return null;
-            /*
-            return connectorFactory.getConnectorConfig() // gets all configs
-                .success(function (response) {
-                    common.$timeout(function () {
-                        var projects = response;
-                        if (projects.length > 0) {
-                            vm.projects = response;
-                        }
-                        msgSuccess("done");
-                    })
-                    return null;
-                }).error(function (error) {
-                    msgError('Error: ' + error.Message + error.ExceptionMessage);
-                    vm.projects = [];
-                    return null;
-                });
-                */
-        }
     }
 
 })();

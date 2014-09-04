@@ -56,8 +56,7 @@
         function getProjects(user, password) {
             var getstr = url + "/Projects?format=json&callId=" + common.generateGuid();
 
-            //var auth = btoa(user + ":" + password);
-            auth = btoa("dude:password");
+            var auth = btoa(user + ":" + password);
 
             var r = $http({
                 url: getstr,
@@ -71,8 +70,7 @@
         function getProject(projectId) {
             var getstr = url + "/Projects/" + projectId + "?format=json&callId=" + common.generateGuid();
 
-            //var auth = btoa(user + ":" + password);
-            auth = btoa("dude:password");
+            var auth = btoa(user + ":" + password);
 
             var r = $http({
                 url: getstr,
@@ -85,7 +83,7 @@
 
         function postProjectRole(projectRole) {
             var getstr = url + "/ProjectRoles?format=json&callId=" + common.generateGuid();
-            auth = btoa("dude:password");
+            var auth = btoa(user + ":" + password);
 
             var r = $http({
                 url: getstr,
@@ -98,7 +96,7 @@
 
         function deleteProjectRole(projectRoleId) {
             var getstr = url + "/ProjectRoles/" + projectRoleId + "?format=json&callId=" + common.generateGuid();
-            auth = btoa("dude:password");
+            var auth = btoa(user + ":" + password);
 
             var r = $http({
                 url: getstr,

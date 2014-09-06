@@ -56,6 +56,7 @@
                     $location.path('/projects/');
                     msgSuccess("Welcome Back!");
                 }).error(function (error) {
+                    common.reportError(error);
                     vm.errorMessage = "Unauthorized";
                 });
 
@@ -68,7 +69,7 @@
                     authService.setCredentials(vm.username, vm.password);
                     $location.path('/projects/');
                 }).error(function (error) {
-                    msgError(error);
+                    common.reportError(error);
                     vm.errorMessage = "Tragically, we cannot accept your membership request";
                 })
         }

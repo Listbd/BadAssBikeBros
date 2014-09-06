@@ -40,7 +40,8 @@
             // generic
             activateController: activateController,
             logger: logger, // for accessibility
-            generateGuid: generateGuid
+            generateGuid: generateGuid,
+            reportError: reportError
         };
 
         return service;
@@ -67,5 +68,12 @@
                    s4() + '-' + s4() + s4() + s4();
         }
 
+        // Report error, assuming time tracker api structure
+        function reportError(error) {
+            if (error.Message.length > 0) {
+                var errFn = logger.getLogFn('', 'error');
+                errFn(error.Errors[0].Message);
+            }
+        }
     }
 })();

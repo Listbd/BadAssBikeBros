@@ -47,7 +47,7 @@
                     })
                     return null;
                 }).error(function (error) {
-                    msgError('Error: ' + error.Message);
+                    common.reportError(error);
                     vm.project = undefined;
                     return null;
                 });
@@ -56,8 +56,8 @@
         // Brian - is it bad form to use $scope. ?  This is how it's done in the documentation / courses
         // that I have used but it seems like you are doing something different in this project.  What
         // should I be doing instead of this??
-        vm.addRole = function (roletoAdd) {
-            timeTracking.postProjectRole(roletoAdd)
+        vm.addRole = function (roleToAdd) {
+            timeTracking.postProjectRole(roleToAdd)
             .success(function (response) {
                 common.$timeout(function () {
                     // Heavy-handed, but, let's update the project....
@@ -65,7 +65,7 @@
                 })
                 return null;
             }).error(function (error) {
-                msgError('Error: ' + error.Message);
+                common.reportError(error);
                 return null;
             });
         }
@@ -88,6 +88,7 @@
                     })
                     return null;
                 }).error(function (error) {
+                    common.reportError(error);
                     vm.tasks = [];
                     return null;
                 });

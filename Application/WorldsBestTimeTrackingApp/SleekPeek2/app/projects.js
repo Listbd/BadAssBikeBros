@@ -84,20 +84,39 @@
                     })
                     return null;
                 }).error(function (error) {
-                    msgError('Error: ' + error.Message + error.ExceptionMessage);
-                    vm.projects = [];
+                    common.reportError(error);
                     return null;
                 });
 
         }
 
-        function deleteProject(projectToDelete) {
-            alert("not yet");
+        vm.addProject = function(projectToAdd) {
+            timeTracking.postProject(projectToAdd)
+            .success(function (response) {
+                common.$timeout(function () {
+                    // Heavy-handed, but, let's update the page....
+                    getProjects();
+                })
+                return null;
+            }).error(function (error) {
+                common.reportError(error);
+                return null;
+            });
         }
 
-        function addProject(projectToAdd) {
-            alert("not yet");
+        vm.deleteProject = function (projectToDelete) {
+            timeTracking.deleteProject(projectToDelete.ProjectId)
+            .success(function (response) {
+                common.$timeout(function () {
+                    // Heavy-handed, but, let's update the page....
+                    getProjects();
+                }).error(function (error) {
+                    common.reportError(error);
+                })
+                return null;
+            });
         }
+
 
     }
 

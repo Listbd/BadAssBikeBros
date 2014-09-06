@@ -15,6 +15,8 @@
             postUser: postUser,
             getProjects: getProjects,
             getProject: getProject,
+            postProject: postProject,
+            deleteProject: deleteProject,
             postProjectRole: postProjectRole,
             deleteProjectRole : deleteProjectRole
         };
@@ -55,13 +57,10 @@
 
         function getProjects() {
             var url = apiurl + "/Projects?format=json&callId=" + common.generateGuid();
-
-            var auth = authService.getAuthCode();
-
             var r = $http({
                 url: url,
                 method: 'GET',
-                headers: { 'Authorization': 'Basic ' + auth } // RHVkZTg6cGFzc3dvcmQ=' }
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() } // RHVkZTg6cGFzc3dvcmQ=' }
             });
             return r;
 
@@ -69,13 +68,10 @@
 
         function getProject(projectId) {
             var url = apiurl + "/Projects/" + projectId + "?format=json&callId=" + common.generateGuid();
-
-            var auth = authService.getAuthCode();
-
             var r = $http({
                 url: url,
                 method: 'GET',
-                headers: { 'Authorization': 'Basic ' + auth } // RHVkZTg6cGFzc3dvcmQ=' }
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() } // RHVkZTg6cGFzc3dvcmQ=' }
             });
             return r;
 
@@ -83,25 +79,31 @@
 
         function postProject(project) {
             var url = apiurl + "/Projects?format=json&callId=" + common.generateGuid();
-            var auth = authService.getAuthCode();
-
             var r = $http({
                 url: url,
                 method: 'POST',
-                headers: { 'Authorization': 'Basic ' + auth },
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() },
                 data: project
+            });
+            return r;
+        }
+
+        function deleteProject(projectId) {
+            var url = apiurl + "/Projects/" + projectId + "?format=json&callId=" + common.generateGuid();
+            var r = $http({
+                url: url,
+                method: 'DELETE',
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
             });
             return r;
         }
 
         function postProjectRole(projectRole) {
             var url = apiurl + "/ProjectRoles?format=json&callId=" + common.generateGuid();
-            var auth = authService.getAuthCode();
-
             var r = $http({
                 url: url,
                 method: 'POST',
-                headers: { 'Authorization': 'Basic ' + auth },
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() },
                 data: projectRole
             });
             return r;
@@ -109,12 +111,10 @@
 
         function deleteProjectRole(projectRoleId) {
             var url = apiurl + "/ProjectRoles/" + projectRoleId + "?format=json&callId=" + common.generateGuid();
-            var auth = btoa(user + ":" + password);
-
             var r = $http({
                 url: url,
                 method: 'DELETE',
-                headers: { 'Authorization': 'Basic ' + auth }
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
             });
             return r;
         }

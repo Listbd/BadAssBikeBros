@@ -10,6 +10,38 @@
                      ng-style="vm.dataGridHeight(vm.projects,false)">
                 </div>
             </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Projects</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Id</th>
+                                <th>External Key</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="project in vm.projects">
+                                <td>{{project.Name}}</td>
+                                <td>{{project.ProjectId}}</td>
+                                <td>{{project.ExternalSystemKey}}</td>
+                                <td><button type="button" class="btn btn-danger" ng-click="vm.deleteProject(project)">Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td><input class="form-control" ng-model=vm.blankProject.Name /></td>
+                                <td><input class="form-control" readonly="readonly" /></td>
+                                <td><input class="form-control" ng-model=vm.blankProject.ExternalSystemKey /></td>
+                                <td><button type="button" class="btn btn-success" ng-click="vm.addProject(vm.blankProject)">Add</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

@@ -3,12 +3,12 @@
 
     var factoryId = 'timeTracking';
 
-    angular.module('app').factory(factoryId, ['common', 'commonConfig', timeTracking]);
+    angular.module('app').factory(factoryId, ['common', 'commonConfig', 'authService', timeTracking]);
 
-    function timeTracking(common, cfg) {
+    function timeTracking(common, cfg, authService) {
         var $http = common.$http;
         var $q = common.$q;
-        var url = "https://csgprohackathonapi.azurewebsites.net/api";
+        var apiurl = "https://csgprohackathonapi.azurewebsites.net/api";
 
         var service = {
             getUser: getUser,
@@ -21,14 +21,14 @@
         return service;
 
         function getUser(user, password) {
-            var getstr = url + "/users?format=json&callId=" + common.generateGuid();
+            var url = apiurl + "/users?format=json&callId=" + common.generateGuid();
             //$http.defaults.headers.common.Authorization = 'Basic RHVkZTg6cGFzc3dvcmQ=';
-            //return $http.get(getstr, { withCredentials: true });
+            //return $http.get(url, { withCredentials: true });
 
             var auth = btoa(user + ":" + password);
 
             var r = $http({
-                url: getstr,
+                url: url,
                 method: 'GET',
                 headers: { 'Authorization': 'Basic ' + auth } // RHVkZTg6cGFzc3dvcmQ=' }
             });
@@ -36,7 +36,7 @@
         }
 
         function postUser(user, password) {
-            var poststr = url + "/users?format=json&callId=" + common.generateGuid();
+            var url = apiurl + "/users?format=json&callId=" + common.generateGuid();
 
             var userdata = {
                 "Password": password,
@@ -48,18 +48,18 @@
                 "ExternalSystemKey": user
             };
 
-            var r = $http.post(poststr, userdata);
+            var r = $http.post(url, userdata);
             return r;
         }
 
 
-        function getProjects(user, password) {
-            var getstr = url + "/Projects?format=json&callId=" + common.generateGuid();
+        function getProjects() {
+            var url = apiurl + "/Projects?format=json&callId=" + common.generateGuid();
 
-            var auth = btoa(user + ":" + password);
+            var auth = authService.getAuthCode();
 
             var r = $http({
-                url: getstr,
+                url: url,
                 method: 'GET',
                 headers: { 'Authorization': 'Basic ' + auth } // RHVkZTg6cGFzc3dvcmQ=' }
             });
@@ -68,12 +68,12 @@
         }
 
         function getProject(projectId) {
-            var getstr = url + "/Projects/" + projectId + "?format=json&callId=" + common.generateGuid();
+            var url = apiurl + "/Projects/" + projectId + "?format=json&callId=" + common.generateGuid();
 
-            var auth = btoa(user + ":" + password);
+            var auth = authService.getAuthCode();
 
             var r = $http({
-                url: getstr,
+                url: url,
                 method: 'GET',
                 headers: { 'Authorization': 'Basic ' + auth } // RHVkZTg6cGFzc3dvcmQ=' }
             });
@@ -81,12 +81,25 @@
 
         }
 
-        function postProjectRole(projectRole) {
-            var getstr = url + "/ProjectRoles?format=json&callId=" + common.generateGuid();
-            var auth = btoa(user + ":" + password);
+        function postProject(project) {
+            var url = apiurl + "/Projects?format=json&callId=" + common.generateGuid();
+            var auth = authService.getAuthCode();
 
             var r = $http({
-                url: getstr,
+                url: url,
+                method: 'POST',
+                headers: { 'Authorization': 'Basic ' + auth },
+                data: project
+            });
+            return r;
+        }
+
+        function postProjectRole(projectRole) {
+            var url = apiurl + "/ProjectRoles?format=json&callId=" + common.generateGuid();
+            var auth = authService.getAuthCode();
+
+            var r = $http({
+                url: url,
                 method: 'POST',
                 headers: { 'Authorization': 'Basic ' + auth },
                 data: projectRole
@@ -95,11 +108,11 @@
         }
 
         function deleteProjectRole(projectRoleId) {
-            var getstr = url + "/ProjectRoles/" + projectRoleId + "?format=json&callId=" + common.generateGuid();
+            var url = apiurl + "/ProjectRoles/" + projectRoleId + "?format=json&callId=" + common.generateGuid();
             var auth = btoa(user + ":" + password);
 
             var r = $http({
-                url: getstr,
+                url: url,
                 method: 'DELETE',
                 headers: { 'Authorization': 'Basic ' + auth }
             });

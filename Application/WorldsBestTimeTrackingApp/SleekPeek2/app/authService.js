@@ -13,7 +13,8 @@
             setCredentials: setCredentials,
             clearCredentials: clearCredentials,
             readCredentials: readCredentials,
-            isAuthorized: isAuthorized
+            isAuthorized: isAuthorized,
+            getAuthCode: getAuthCode
         };
         return service;
 
@@ -34,6 +35,20 @@
             //return $cookieStore.get('authdata') + ' ---- ' + decoded;
             return decoded;
         };
+
+        function getAuthCode() {
+            var creds = readCredentials();
+            if (creds == 0 || creds.length == 0) {
+                return null;
+            }
+            var credsarray = creds.split(':');
+            var user = credsarray[0];
+            var pass = credsarray[1];
+
+            var auth = btoa(user + ":" + pass);
+
+            return auth;
+        }
 
         function isAuthorized() {
             // TODO - use something better for authentication - rather than hardcoded values

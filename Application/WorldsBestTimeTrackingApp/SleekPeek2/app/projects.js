@@ -68,20 +68,17 @@
         }
 
         function getProjects() {
-            var creds = authService.readCredentials();
-            if (creds == 0 || creds.length == 0) {
-                return null;
-            }
-            var credsarray = creds.split(':');
-            var user = credsarray[0];
-            var pass = credsarray[1];
-
-            return timeTracking.getProjects(user, pass)
+            return timeTracking.getProjects()
                 .success(function (response) {
                     common.$timeout(function () {
                         var projects = response;
                         if (projects.length > 0) {
                             vm.projects = response;
+                            vm.blankProject =
+                            {
+                                'Name': '',
+                                'ExternalSystemKey': ''
+                            };
                         }
 
                     })
@@ -92,6 +89,14 @@
                     return null;
                 });
 
+        }
+
+        function deleteProject(projectToDelete) {
+            alert("not yet");
+        }
+
+        function addProject(projectToAdd) {
+            alert("not yet");
         }
 
     }

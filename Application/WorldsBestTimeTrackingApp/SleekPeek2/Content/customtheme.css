@@ -157,3 +157,6 @@ input:disabled
 }
 
 
+.table .clickable:hover {
+    cursor: pointer;
+}

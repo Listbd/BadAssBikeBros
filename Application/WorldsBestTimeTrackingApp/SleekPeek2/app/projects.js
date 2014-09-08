@@ -17,10 +17,16 @@
         vm.projects = [];
         
         vm.dataGridHeight = dataGridHeight;
-        var detailCellTemplate = "<button style=\"text-align:center\" class=\"btn btn-default btn-xs center-block\" ng-click=\"vm.goToDetail(row)\">Details</button>";
-        vm.goToDetail = function (row) {
-            goToDetail(row.entity);
+        var detailCellTemplate = "<button style=\"text-align:center\" class=\"btn btn-default btn-xs center-block\" ng-click=\"vm.goToDetail(row.entity)\">Details</button>";
+
+        vm.goToDetail = function (project) {
+            goToDetail(project);
         };
+        function goToDetail(project) {
+            var detailPath = "/project/" + project.ProjectId;
+            $location.path(detailPath);
+        }
+
         vm.projectsDataGrid = {
             data: 'vm.projects',
             multiSelect: false,
@@ -39,10 +45,7 @@
             ],
         }
 
-        function goToDetail(test) {
-            var detailPath = "/project/" + test.ProjectId;
-            $location.path(detailPath);
-        }
+
 
         function dataGridHeight(items, hasFooter) {
             var rowHeight = 30;

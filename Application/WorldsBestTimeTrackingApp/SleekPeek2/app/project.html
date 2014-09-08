@@ -52,6 +52,41 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Tasks</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>External Key</th>
+                                    <th>Billable?</th>
+                                    <th>Require Comment</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="projectTask in vm.project.ProjectTasks">
+                                    <td>{{projectTask.Name}}</td>
+                                    <td>{{projectTask.ExternalSystemKey}}</td>
+                                    <td>{{projectTask.Billable}}</td>
+                                    <td>{{projectTask.RequireComment}}</td>
+                                    <td><button type="button" class="btn btn-danger" ng-click="vm.deleteTask(projectTask)">Delete</button></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-control" ng-model=vm.blankTask.Name /></td>
+                                    <td><input class="form-control" ng-model=vm.blankTask.ExternalSystemKey /></td>
+                                    <td><input class="form-control" ng-model=vm.blankTask.Billable /></td>
+                                    <td><input class="form-control" ng-model=vm.blankTask.RequireComment /></td>
+                                    <td><button type="button" class="btn btn-success" ng-click="vm.addTask(vm.blankTask)">Add</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
         </fieldset>

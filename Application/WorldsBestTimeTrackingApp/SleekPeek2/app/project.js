@@ -44,6 +44,14 @@
                             'Name': '',
                             'ExternalSystemKey': ''
                         };
+                        vm.blankTask =
+                        {
+                            'ProjectId': id,
+                            'Name': '',
+                            'ExternalSystemKey': '',
+                            'Billable': false,
+                            'RequireComment' : false
+                        };
                     })
                     return null;
                 }).error(function (error) {

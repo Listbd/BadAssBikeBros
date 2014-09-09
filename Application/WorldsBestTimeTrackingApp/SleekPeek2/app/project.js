@@ -83,9 +83,10 @@
             .success(function (response) {
                 common.$timeout(function () {
                     getProject(vm.projectId);
-                }).error(function (error) {
-                    common.reportError(error);
                 })
+                return null;
+            }).error(function (error) {
+              common.reportError(error);
                 return null;
             });
         }
@@ -109,9 +110,10 @@
             .success(function (response) {
                 common.$timeout(function () {
                     getProject(vm.projectId);
-                }).error(function (error) {
-                    common.reportError(error);
                 })
+                return null;
+            }).error(function (error) {
+                common.reportError(error);
                 return null;
             });
         }

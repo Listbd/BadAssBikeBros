@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\authService.js" />
+    <Content Include="app\timeEntry.html" />
+    <Content Include="app\timeEntry.js" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\logo.png" />

@@ -53,7 +53,7 @@
             return timeTracking.getUser(vm.username, vm.password)
                 .success(function (response) {
                     authService.setCredentials(vm.username, vm.password);
-                    $location.path('/projects/');
+                    $location.path('/timeEntry/');
                     msgSuccess("Welcome Back!");
                 }).error(function (error) {
                     common.reportError(error);

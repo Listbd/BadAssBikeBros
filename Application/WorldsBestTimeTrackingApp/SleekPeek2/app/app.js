@@ -4,7 +4,10 @@
     var app = angular.module('app', ['ngCookies', 'ngRoute', 'ngGrid', 'ngResource', 'common']);
 
     app.config(function ($routeProvider) {
-        $routeProvider            
+        $routeProvider
+            .when('/timeEntry', {
+                templateUrl: 'app/timeEntry.html'
+            })
           .when('/projects', {
               templateUrl: 'app/projects.html'
           })            

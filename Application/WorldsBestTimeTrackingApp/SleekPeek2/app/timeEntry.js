@@ -72,6 +72,10 @@
         vm.startWork = function () {
             //vm.blankTimeEntry.TimeIn = Date.now();
             //vm.blankTimeEntry.TimeIn = '2014-09-09T00:29:10.0334982+00:00';
+            if (vm.blankTimeEntry.TimeIn == undefined || vm.blankTimeEntry.TimeIn.length == 0) {
+                vm.blankTimeEntry.TimeIn = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+            }
+
             vm.blankTimeEntry.ProjectTaskId = vm.blankTimeEntry.Task.ProjectTaskId;
             return timeTracking.postTimeEntry(vm.blankTimeEntry)
             .success(function (response) {
@@ -94,6 +98,14 @@
                         var timeEntries = response;
                         if (timeEntries.length > 0) {
                             vm.timeEntries = response;
+                            vm.timeEntries.reverse(); // TEMP, should sort, but not sure why it doesn't work
+                            //vm.timeEntries.sort(
+                            //    function (a, b) {
+                            //        var aa = new Date(a.TimeIn);
+                            //        var bb = new Date(b.TimeIn);
+                            //        var result = aa > bb;
+                            //        return result;
+                            //    });
                         }
 
                     })

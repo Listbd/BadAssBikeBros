@@ -113,9 +113,10 @@
                 common.$timeout(function () {
                     // Heavy-handed, but, let's update the page....
                     getProjects();
-                }).error(function (error) {
-                    common.reportError(error);
-                })
+                })                
+                return null;
+            }).error(function (error) {
+                common.reportError(error);
                 return null;
             });
         }

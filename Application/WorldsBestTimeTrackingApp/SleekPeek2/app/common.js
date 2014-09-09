@@ -72,7 +72,12 @@
         function reportError(error) {
             if (error.Message.length > 0) {
                 var errFn = logger.getLogFn('', 'error');
-                errFn(error.Errors[0].Message);
+                if (error.Errors !== undefined && error.Errors.length > 0) {
+                    errFn(error.Errors[0].Message);
+                }
+                else {
+                    errFn(error.Message);
+                }
             }
         }
     }

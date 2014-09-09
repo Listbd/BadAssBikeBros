@@ -18,7 +18,9 @@
             postProject: postProject,
             deleteProject: deleteProject,
             postProjectRole: postProjectRole,
-            deleteProjectRole : deleteProjectRole
+            deleteProjectRole : deleteProjectRole,
+            postProjectTask: postProjectTask,
+            deleteProjectTask : deleteProjectTask
         };
         return service;
 
@@ -119,7 +121,26 @@
             return r;
         }
 
+        function postProjectTask(projectTask) {
+            var url = apiurl + "/ProjectTasks?format=json&callId=" + common.generateGuid();
+            var r = $http({
+                url: url,
+                method: 'POST',
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() },
+                data: projectTask
+            });
+            return r;
+        }
 
+        function deleteProjectTask(projectTaskId) {
+            var url = apiurl + "/ProjectTasks/" + projectTaskId + "?format=json&callId=" + common.generateGuid();
+            var r = $http({
+                url: url,
+                method: 'DELETE',
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
+            });
+            return r;
+        }
     }
 
 })();

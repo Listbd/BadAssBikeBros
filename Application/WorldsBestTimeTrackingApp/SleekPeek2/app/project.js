@@ -83,78 +83,42 @@
             .success(function (response) {
                 common.$timeout(function () {
                     getProject(vm.projectId);
+                }).error(function (error) {
+                    common.reportError(error);
                 })
                 return null;
             });
         }
 
-        function getTasks(projectId) {
-            return connectorFactory.getProjectTasks(projectId)
-                .success(function (response) {
-                    common.$timeout(function () {
-                        vm.tasks = response.Tasks;
-                    })
-                    return null;
-                }).error(function (error) {
-                    common.reportError(error);
-                    vm.tasks = [];
-                    return null;
-                });
+        vm.addTask = function (taskToAdd) {
+            timeTracking.postProjectTask(taskToAdd)
+            .success(function (response) {
+                common.$timeout(function () {
+                    // Heavy-handed, but, let's update the project....
+                    getProject(vm.projectId);
+                })
+                return null;
+            }).error(function (error) {
+                common.reportError(error);
+                return null;
+            });
         }
 
-        vm.dataGridHeight = tasksGridHeight;
-        //vm.totalServerItems = 0;
-        //vm.pagingOptions = {
-        //    pageSizes: [20, 50, 100],
-        //    pageSize: 20,
-        //    currentPage: 1
-        //};
-        vm.tasksDataGrid = {
-            data: 'vm.tasks',
-            //selectedItems: vm.selectedItem,
-            multiSelect: false,
-            enableRowSelection: true,
-            enableColumnResize: true,
-            //enablePaging: true,
-            //showFooter: true,
-            //totalServerItems: 'vm.totalServerItems',
-            //pagingOptions: vm.pagingOptions,
-            columnDefs: [
-                {
-                    field: 'Date',
-                    displayName: 'Date/Time',
-                    cellTemplate: '<div class=\"ngCellText ng-scope col3 colt3\" ng-class=\"col.colIndex()\"><span class=\"ng-binding\" style=\"cursor: default;\" ng-cell-text=\"\" >{{vm.formatDate(row.entity[col.field]);}}</span></div>',
-                    width: '*'
-                },
-                {
-                    field: 'Message',
-                    displayName: 'Message',
-                    width: '**'
-                },
-                {
-                    field: 'Level',
-                    displayName: 'Level',
-                    width: '*'
-                }
-            ],
+        vm.deleteTask = function (taskToDelete) {
+            timeTracking.deleteProjectTask(taskToDelete.ProjectTaskId)
+            .success(function (response) {
+                common.$timeout(function () {
+                    getProject(vm.projectId);
+                }).error(function (error) {
+                    common.reportError(error);
+                })
+                return null;
+            });
         }
 
         function formatDate(date) {
             return moment(date).format("MM/DD/YYYY  HH:mm:ss");
         }
-
-        function tasksGridHeight() {
-            var rowHeight = 30;
-            var headerHeight = 30;
-            var footerHeight = 0;
-            var itemsVisible = 20; // (vm.log.length + 1)
-            return {
-                height: (itemsVisible * rowHeight + headerHeight + footerHeight) + "px",
-                border: "1px solid rgb(212,212,212)"
-            };
-        };
-
-
     }
 
 })();

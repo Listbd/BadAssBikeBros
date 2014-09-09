@@ -19,6 +19,7 @@
 
         function activate() {
             resetBlankTimeEntry();
+            getTimeEntries();
             var promises = [getProjects()];
             common.activateController(promises, controllerId).then(function () { });
 
@@ -70,13 +71,14 @@
 
         vm.startWork = function () {
             //vm.blankTimeEntry.TimeIn = Date.now();
-            vm.blankTimeEntry.TimeIn = '2014-09-09T00:29:10.0334982+00:00';
+            //vm.blankTimeEntry.TimeIn = '2014-09-09T00:29:10.0334982+00:00';
             vm.blankTimeEntry.ProjectTaskId = vm.blankTimeEntry.Task.ProjectTaskId;
             return timeTracking.postTimeEntry(vm.blankTimeEntry)
             .success(function (response) {
                 common.$timeout(function () {
                     // Heavy-handed, but, let's update the project....
-                    vm.getTimeEntries();
+                    getTimeEntries();
+                    resetBlankTimeEntry();
                 })
                 return null;
             }).error(function (error) {
@@ -85,7 +87,7 @@
             });
         }
 
-        vm.getTimeEntries = function () {
+        function getTimeEntries() {
             return timeTracking.getTimeEntries()
                 .success(function (response) {
                     common.$timeout(function () {

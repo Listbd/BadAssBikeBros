@@ -71,13 +71,16 @@
         // Report error, assuming time tracker api structure
         function reportError(error) {
             if (error.Message.length > 0) {
-                var errFn = logger.getLogFn('', 'error');
+                var errmsg = error.Message;
                 if (error.Errors !== undefined && error.Errors.length > 0) {
-                    errFn(error.Errors[0].Message);
+                    for (var i = 0; i < error.Errors.length; i++) {
+                        if (error.Errors[i].Message != undefined && error.Errors[i].Message.length > 0) {
+                            errmsg += ' ' + error.Errors[i].Message;
+                        }
+                    }
                 }
-                else {
-                    errFn(error.Message);
-                }
+                var errFn = logger.getLogFn('', 'error');
+                errFn(errmsg);
             }
         }
     }

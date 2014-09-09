@@ -20,7 +20,10 @@
             postProjectRole: postProjectRole,
             deleteProjectRole : deleteProjectRole,
             postProjectTask: postProjectTask,
-            deleteProjectTask : deleteProjectTask
+            deleteProjectTask: deleteProjectTask,
+            getTimeEntries: getTimeEntries,
+            postTimeEntry: postTimeEntry
+
         };
         return service;
 
@@ -138,6 +141,27 @@
                 url: url,
                 method: 'DELETE',
                 headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
+            });
+            return r;
+        }
+
+        function getTimeEntries() {
+            var url = apiurl + "/TimeEntries" + "?format=json&callId=" + common.generateGuid();
+            var r = $http({
+                url: url,
+                method: 'GET',
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
+            });
+            return r;
+        }
+
+        function postTimeEntry(timeEntry) {
+            var url = apiurl + "/TimeEntries?format=json&callId=" + common.generateGuid();
+            var r = $http({
+                url: url,
+                method: 'POST',
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() },
+                data: timeEntry
             });
             return r;
         }

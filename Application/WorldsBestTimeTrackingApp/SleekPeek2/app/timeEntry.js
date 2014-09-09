@@ -60,23 +60,47 @@
         }
 
         vm.updateTasks = function () {
-            vm.blankTimeEntry.Tasks = [{
-                "ProjectTaskId": 1,
-                "Name": "Development",
-                "Billable": true,
-                "RequireComment": true,
-                "ExternalSystemKey": "sample string 6"
-            },
-            {
-                "ProjectTaskId": 2,
-                "Name": "Screwing Around",
-                "Billable": true,
-                "RequireComment": true,
-                "ExternalSystemKey": "sample string 6"
-            }]
+            vm.blankTimeEntry.Task = undefined;
+            vm.blankTimeEntry.Tasks = vm.blankTimeEntry.Project.ProjectTasks;
+            if (vm.blankTimeEntry.Tasks.length === 1)
+                vm.blankTimeEntry.Task = vm.blankTimeEntry.Tasks[0];
+            // Hard-code role
+            vm.blankTimeEntry.ProjectRoleId = vm.blankTimeEntry.Project.ProjectRoles[0].ProjectRoleId;
         }
 
+        vm.startWork = function () {
+            //vm.blankTimeEntry.TimeIn = Date.now();
+            vm.blankTimeEntry.TimeIn = '2014-09-09T00:29:10.0334982+00:00';
+            vm.blankTimeEntry.ProjectTaskId = vm.blankTimeEntry.Task.ProjectTaskId;
+            return timeTracking.postTimeEntry(vm.blankTimeEntry)
+            .success(function (response) {
+                common.$timeout(function () {
+                    // Heavy-handed, but, let's update the project....
+                    vm.getTimeEntries();
+                })
+                return null;
+            }).error(function (error) {
+                common.reportError(error);
+                return null;
+            });
+        }
 
+        vm.getTimeEntries = function () {
+            return timeTracking.getTimeEntries()
+                .success(function (response) {
+                    common.$timeout(function () {
+                        var timeEntries = response;
+                        if (timeEntries.length > 0) {
+                            vm.timeEntries = response;
+                        }
+
+                    })
+                    return null;
+                }).error(function (error) {
+                    common.reportError(error);
+                    return null;
+                });
+        }
 
     }
 })();

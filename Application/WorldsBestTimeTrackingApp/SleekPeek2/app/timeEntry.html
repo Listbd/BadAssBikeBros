@@ -27,7 +27,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" ng-disabled="vm.blankTimeEntry.Tasks.Length === 0" ng-model="vm.blankTimeEntry.Task" ng-options="task.Name for task in vm.blankTimeEntry.Tasks">
+                                        <select class="form-control" ng-disabled="vm.blankTimeEntry.Tasks.length <= 1" ng-model="vm.blankTimeEntry.Task" ng-options="task.Name for task in vm.blankTimeEntry.Tasks">
                                             <option value="">--Select One--</option>
                                         </select>
                                     </td>
@@ -35,7 +35,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td><button type="button" class="btn btn-success" ng-click="alert('Adding a new entry!')">Start Work</button></td>
+                                    <td><button type="button" class="btn btn-success" ng-disabled="vm.blankTimeEntry.Task === undefined" ng-click="vm.startWork()">Start Work</button></td>
                                 </tr>
                                 <tr ng-repeat="te in vm.timeEntries">
                                     <td />

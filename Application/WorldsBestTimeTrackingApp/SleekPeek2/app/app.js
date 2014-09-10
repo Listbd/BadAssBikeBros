@@ -22,4 +22,11 @@
           });
     })
 
+    app.controller('navController', function ($scope, $location) {
+        // Brian, not sure how to get rid of $scope here...
+        $scope.isActive = function (route) {
+            return route === $location.path();
+        }
+    });
+
 })();

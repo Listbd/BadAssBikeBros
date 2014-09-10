@@ -91,6 +91,28 @@
             });
         }
 
+        vm.stopWork = function (te) {
+            //vm.blankTimeEntry.TimeIn = Date.now();
+            //vm.blankTimeEntry.TimeIn = '2014-09-09T00:29:10.0334982+00:00';
+            if (te.TimeOut == undefined || te.TimeOut.length == 0) {
+                te.TimeOut = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+            }
+
+            return timeTracking.putTimeEntry(te)
+            .success(function (response) {
+                common.$timeout(function () {
+                    // Heavy-handed, but, let's update the project....
+                    getTimeEntries();
+                    resetBlankTimeEntry();
+                })
+                return null;
+            }).error(function (error) {
+                common.reportError(error);
+                return null;
+            });
+        }
+
+
         function getTimeEntries() {
             return timeTracking.getTimeEntries()
                 .success(function (response) {

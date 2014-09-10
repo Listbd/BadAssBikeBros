@@ -22,7 +22,8 @@
             postProjectTask: postProjectTask,
             deleteProjectTask: deleteProjectTask,
             getTimeEntries: getTimeEntries,
-            postTimeEntry: postTimeEntry
+            postTimeEntry: postTimeEntry,
+            putTimeEntry: putTimeEntry
 
         };
         return service;
@@ -160,6 +161,17 @@
             var r = $http({
                 url: url,
                 method: 'POST',
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() },
+                data: timeEntry
+            });
+            return r;
+        }
+
+        function putTimeEntry(timeEntry) {
+            var url = apiurl + "/TimeEntries/" + timeEntry.TimeEntryId + "?format=json&callId=" + common.generateGuid();
+            var r = $http({
+                url: url,
+                method: 'PUT',
                 headers: { 'Authorization': 'Basic ' + authService.getAuthCode() },
                 data: timeEntry
             });

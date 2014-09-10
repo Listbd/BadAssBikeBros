@@ -121,6 +121,9 @@
                         if (timeEntries.length > 0) {
                             vm.timeEntries = response;
                             vm.timeEntries.reverse(); // TEMP, should sort, but not sure why it doesn't work
+
+                            //treeMe(vm.timeEntries);
+
                             //vm.timeEntries.sort(
                             //    function (a, b) {
                             //        var aa = new Date(a.TimeIn);
@@ -136,6 +139,26 @@
                     common.reportError(error);
                     return null;
                 });
+        }
+
+        // Creates hierarchical representation of entries by date
+        // starting with sorted array
+        function treeMe(orig) {
+            var days = [{ te: [] } ];
+            days[0].te[0] = orig[0]; // start
+            var x = 0;
+            var y = 1;
+            for (var i = 1; i < orig.length; i++) {
+                var test1 = days[x].te[y].TimeIn; //
+                var test2 = orig[i].TimeIn; // 
+                if (test1 !== test2) {
+                    x++;
+                    y = 0;
+                }
+                days[x].te[y] = orig[i];
+                y++;
+            }
+            return days;
         }
 
     }

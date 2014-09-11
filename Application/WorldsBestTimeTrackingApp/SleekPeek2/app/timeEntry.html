@@ -44,7 +44,7 @@
                                     <td ng-bind="te.TimeOut"/>
                                     <td ng-bind="te.Hours"/>
                                     <td ng-bind="te.Comment"/>
-                                    <td><button type="button" class="btn btn-danger" ng-click="vm.stopWork(te)">Stop Work</button></td>
+                                    <td><button type="button" class="btn btn-danger" ng-show="te.TimeOut == undefined" ng-click="vm.stopWork(te)">Stop Work</button></td>
                                 </tr>
                             </tbody>
                         </table>

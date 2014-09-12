@@ -92,8 +92,8 @@
             return timeTracking.postTimeEntry(vm.blankTimeEntry)
             .success(function (response) {
                 common.$timeout(function () {
-                    // Heavy-handed, but, let's update the project....
-                    getTimeEntries();
+                    // Refresh the day
+                    refreshDay(vm.blankTimeEntry.TimeIn);
                     resetBlankTimeEntry();
                 })
                 return null;
@@ -113,8 +113,8 @@
             return timeTracking.putTimeEntry(te)
             .success(function (response) {
                 common.$timeout(function () {
-                    // Heavy-handed, but, let's update the project....
-                    getTimeEntries();
+                    // Refresh the day
+                    refreshDay(te.TimeIn);
                     resetBlankTimeEntry();
                 })
                 return null;
@@ -124,6 +124,30 @@
             });
         }
 
+        function refreshDay(day) {
+            var dayOnly = day.substring(0, 10);
+            for (var i = 0; i < vm.timeEntries.length; i++)
+            {
+                if (vm.timeEntries[i].dateDisplay == dayOnly)
+                {
+                    return timeTracking.getTimeEntriesForDate(dayOnly)
+                    .success(function (response) {
+                        common.$timeout(function () {
+                            var timeEntries = response;
+                            if (timeEntries.length > 0) {
+                                vm.timeEntries[i].data = response.reverse();
+                            }
+
+                        })
+                        return null;
+                    }).error(function (error) {
+                        common.reportError(error);
+                        return null;
+                    });
+                }
+            }
+        }
+
 
         function getTimeEntriesForDate(dateToGet, sortIndex) {
             return timeTracking.getTimeEntriesForDate(dateToGet)
@@ -131,20 +155,12 @@
                     common.$timeout(function () {
                         var timeEntries = response;
                         if (timeEntries.length > 0) {
-                            vm.timeEntries.push(response);
-                            vm.timeEntries[vm.timeEntries.length - 1].dateDisplay = dateToGet;
-                            vm.timeEntries[vm.timeEntries.length - 1].sortIndex = sortIndex;
-                            vm.timeEntries[vm.timeEntries.length - 1].reverse(); // TEMP, should sort, but not sure why it doesn't work
-
-                            //treeMe(vm.timeEntries);
-
-                            //vm.timeEntries.sort(
-                            //    function (a, b) {
-                            //        var aa = new Date(a.TimeIn);
-                            //        var bb = new Date(b.TimeIn);
-                            //        var result = aa > bb;
-                            //        return result;
-                            //    });
+                            var newEntry = {
+                                'data': response.reverse(),
+                                'dateDisplay' : dateToGet,
+                                'sortIndex' : sortIndex
+                            }
+                            vm.timeEntries.push(newEntry);
                         }
 
                     })
@@ -153,26 +169,6 @@
                     common.reportError(error);
                     return null;
                 });
-        }
-
-        // Creates hierarchical representation of entries by date
-        // starting with sorted array
-        function treeMe(orig) {
-            var days = [{ te: [] } ];
-            days[0].te[0] = orig[0]; // start
-            var x = 0;
-            var y = 1;
-            for (var i = 1; i < orig.length; i++) {
-                var test1 = days[x].te[y].TimeIn; //
-                var test2 = orig[i].TimeIn; // 
-                if (test1 !== test2) {
-                    x++;
-                    y = 0;
-                }
-                days[x].te[y] = orig[i];
-                y++;
-            }
-            return days;
         }
 
     }

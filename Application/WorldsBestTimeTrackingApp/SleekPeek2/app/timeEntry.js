@@ -22,29 +22,27 @@
         function activate() {
             resetBlankTimeEntry();
 
+            var promises = [getProjects()];
+
             //var today = moment(Date.now()).format('YYYY-MM-DD');
             //var yesterday = moment(Date.now()).subtract(1, 'days').format('YYYY-MM-DD');
             var daysToPull = 10;
             for (var i = 0; i < daysToPull; i++)
             {
-                getTimeEntriesForDate(moment(Date.now()).subtract(i, 'days').format('YYYY-MM-DD'), i);
+                promises.push(getTimeEntriesForDate(moment(Date.now()).subtract(i, 'days').format('YYYY-MM-DD'), i));
             }
 
-            if (vm.timeEntries.length === 0) {
-                // Nothing yet exists, so make the first group (today) manually
-                var newEntry = {
-                    'data': [],
-                    'dateDisplay': moment(Date.now()).format('YYYY-MM-DD'),
-                    'sortIndex': 0
+            common.activateController(promises, controllerId).then(function () { 
+                if (vm.timeEntries.length === 0) {
+                    // Nothing yet exists, so make the first group (today) manually
+                    var newEntry = {
+                        'data': [],
+                        'dateDisplay': moment(Date.now()).format('YYYY-MM-DD'),
+                        'sortIndex': 0
+                    }
+                    vm.timeEntries.push(newEntry);
                 }
-                vm.timeEntries.push(newEntry);
-            }
-
-
-            //getTimeEntriesForDate(today);
-            //getTimeEntriesForDate(yesterday);
-            var promises = [getProjects()];
-            common.activateController(promises, controllerId).then(function () { });
+            });
 
             //    vm.name = "fiduciary";
         }

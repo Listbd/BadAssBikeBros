@@ -38,11 +38,6 @@
             //    vm.name = "fiduciary";
         }
 
-        function getTimeEntriesForSpan(daysToPull)
-        {
-
-        }
-
         function getProjects() {
             return timeTracking.getProjects()
                 .success(function (response) {

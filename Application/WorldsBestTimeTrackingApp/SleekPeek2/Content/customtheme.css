@@ -201,3 +201,11 @@ input:disabled
     margin-top: 120px;
   }
 }
+
+
+/* CUSTOM NAV BAR
+    --------------------*/
+
+.navbar-default {
+	border-color: #428bca;
+}

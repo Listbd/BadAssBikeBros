@@ -2,9 +2,9 @@
     <form class="form-horizontal">
         <fieldset class="col-sm-12 col-lg-12 col-md-12">
             <div class="form-group">
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-repeat="dayEntries in vm.timeEntries">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Time Entry</h3>
+                        <h3 class="panel-title">{{ dayEntries.dateDisplay }}</h3>
                     </div>
                     <div class="panel-body">
                         <table class="table table-striped">
@@ -14,14 +14,13 @@
                                     <th>Task</th>
                                     <th>Start</th>
                                     <th>End</th>
-                                    <th>Hours</th>
+                                    <th>Time</th>
                                     <th>Comment</th>
                                     <th>Actions</th>
-                                    <th>Id</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr ng-show="$first">
                                     <td>
                                         <select class="form-control" ng-model="vm.blankTimeEntry.Project" ng-options="project.Name for project in vm.projects" ng-change="vm.updateTasks()">
                                             <option value="">--Select One--</option>
@@ -34,20 +33,18 @@
                                     </td>
                                     <td><input class="form-control" type="dateTimeLocal" ng-model="vm.blankTimeEntry.TimeIn"></input></td>
                                     <td><input class="form-control" type="dateTimeLocal" ng-model="vm.blankTimeEntry.TimeOut"></input></td>
-                                    <td><input class="form-control"  type="number" ng-model="vm.blankTimeEntry.Hours" /></td>
+                                    <td><input class="form-control"  type="number" disabled="disabled" ng-model="vm.blankTimeEntry.Hours" /></td>
                                     <td><input class="form-control"  ng-model="vm.blankTimeEntry.Comment" /></td>
                                     <td><button type="button" class="btn btn-success" ng-disabled="vm.blankTimeEntry.Task === undefined" ng-click="vm.startWork()">Start Work</button></td>
-                                    <td></td>
                                 </tr>
-                                <tr ng-repeat="te in vm.timeEntries | filter">
+                                <tr ng-repeat="te in dayEntries">
                                     <td ng-bind="te.ProjectName" />
-                                    <td ng-bind="te.ProjectTaskName"/>
+                                    <td ng-bind="te.ProjectTaskName" />
                                     <td ng-bind="te.TimeIn" />
-                                    <td ng-bind="te.TimeOut"/>
-                                    <td ng-bind="te.TotalTime"/>
-                                    <td ng-bind="te.Comment"/>
+                                    <td ng-bind="te.TimeOut" />
+                                    <td ng-bind="te.TotalTime" />
+                                    <td ng-bind="te.Comment" />
                                     <td><button type="button" class="btn btn-danger" ng-show="te.TimeOut == undefined" ng-click="vm.stopWork(te)">Stop Work</button></td>
-                                    <td ng-bind="te.TimeEntryId" />
                                 </tr>
                             </tbody>
                         </table>

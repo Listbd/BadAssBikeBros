@@ -15,11 +15,18 @@
 
         var vm = this;
 
+        vm.timeEntries = [];
+
         activate();
 
         function activate() {
             resetBlankTimeEntry();
-            getTimeEntries();
+
+            var today = moment(Date.now()).format('YYYY-MM-DD');
+            var yesterday = moment(Date.now()).subtract(1, 'days').format('YYYY-MM-DD');
+
+            getTimeEntriesForDate(today);
+            getTimeEntriesForDate(yesterday);
             var promises = [getProjects()];
             common.activateController(promises, controllerId).then(function () { });
 
@@ -113,14 +120,15 @@
         }
 
 
-        function getTimeEntries() {
-            return timeTracking.getTimeEntries()
+        function getTimeEntriesForDate(dateToGet) {
+            return timeTracking.getTimeEntriesForDate(dateToGet)
                 .success(function (response) {
                     common.$timeout(function () {
                         var timeEntries = response;
                         if (timeEntries.length > 0) {
-                            vm.timeEntries = response;
-                            vm.timeEntries.reverse(); // TEMP, should sort, but not sure why it doesn't work
+                            vm.timeEntries.push(response);
+                            vm.timeEntries[vm.timeEntries.length - 1].dateDisplay = dateToGet;
+                            vm.timeEntries[vm.timeEntries.length -1].reverse(); // TEMP, should sort, but not sure why it doesn't work
 
                             //treeMe(vm.timeEntries);
 

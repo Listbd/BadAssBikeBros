@@ -22,6 +22,7 @@
             postProjectTask: postProjectTask,
             deleteProjectTask: deleteProjectTask,
             getTimeEntries: getTimeEntries,
+            getTimeEntriesForDate : getTimeEntriesForDate,
             postTimeEntry: postTimeEntry,
             putTimeEntry: putTimeEntry
 
@@ -156,15 +157,15 @@
             return r;
         }
 
-        //function getTimeEntries(timeDate) {
-        //    var url = apiurl + "/TimeEntries/date/" + timeDate + "?format=json&callId=" + common.generateGuid();
-        //    var r = $http({
-        //        url: url,
-        //        method: 'GET',
-        //        headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
-        //    });
-        //    return r;
-        //}
+        function getTimeEntriesForDate(timeDate) {
+            var url = apiurl + "/TimeEntries/date/" + timeDate + "?format=json&callId=" + common.generateGuid();
+            var r = $http({
+                url: url,
+                method: 'GET',
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
+            });
+            return r;
+        }
 
 
         function postTimeEntry(timeEntry) {

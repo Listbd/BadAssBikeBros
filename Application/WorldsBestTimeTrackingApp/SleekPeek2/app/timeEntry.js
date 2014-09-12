@@ -30,6 +30,17 @@
                 getTimeEntriesForDate(moment(Date.now()).subtract(i, 'days').format('YYYY-MM-DD'), i);
             }
 
+            if (vm.timeEntries.length === 0) {
+                // Nothing yet exists, so make the first group (today) manually
+                var newEntry = {
+                    'data': [],
+                    'dateDisplay': moment(Date.now()).format('YYYY-MM-DD'),
+                    'sortIndex': 0
+                }
+                vm.timeEntries.push(newEntry);
+            }
+
+
             //getTimeEntriesForDate(today);
             //getTimeEntriesForDate(yesterday);
             var promises = [getProjects()];
@@ -125,6 +136,9 @@
         }
 
         vm.totalDay = function (data) {
+            return 0; //total;
+
+
             var total = 0;
             var y = moment(data[0].TotalTime);
             for (var i = 0; i < data.length; i++) {
@@ -132,7 +146,6 @@
                 var x = moment(t).add(y);
                 total += data[i].TotalTime;
             }
-            return 0; //total;
         }
 
         function refreshDay(day) {
@@ -144,8 +157,7 @@
                     return timeTracking.getTimeEntriesForDate(dayOnly)
                     .success(function (response) {
                         common.$timeout(function () {
-                            var timeEntries = response;
-                            if (timeEntries.length > 0) {
+                            if (response.length > 0) {
                                 vm.timeEntries[i].data = response.reverse();
                             }
 
@@ -164,8 +176,7 @@
             return timeTracking.getTimeEntriesForDate(dateToGet)
                 .success(function (response) {
                     common.$timeout(function () {
-                        var timeEntries = response;
-                        if (timeEntries.length > 0) {
+                        if (response.length > 0) {
                             var newEntry = {
                                 'data': response.reverse(),
                                 'dateDisplay' : dateToGet,

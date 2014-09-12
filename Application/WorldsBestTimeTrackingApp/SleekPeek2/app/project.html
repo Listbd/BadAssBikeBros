@@ -79,8 +79,8 @@
                                 <tr>
                                     <td><input class="form-control" ng-model=vm.blankTask.Name /></td>
                                     <td><input class="form-control" ng-model=vm.blankTask.ExternalSystemKey /></td>
-                                    <td><input class="form-control" ng-model=vm.blankTask.Billable /></td>
-                                    <td><input class="form-control" ng-model=vm.blankTask.RequireComment /></td>
+                                    <td><input type="checkbox" ng-model=vm.blankTask.Billable /></td>
+                                    <td><input type="checkbox" ng-model=vm.blankTask.RequireComment /></td>
                                     <td><button type="button" class="btn btn-success" ng-click="vm.addTask(vm.blankTask)">Add</button></td>
                                 </tr>
                             </tbody>

@@ -70,7 +70,7 @@
 
         // Report error, assuming time tracker api structure
         function reportError(error) {
-            if (error.Message.length > 0) {
+            if (error.Message !== undefined && error.Message.length > 0) {
                 var errmsg = error.Message;
                 if (error.Errors !== undefined && error.Errors.length > 0) {
                     for (var i = 0; i < error.Errors.length; i++) {

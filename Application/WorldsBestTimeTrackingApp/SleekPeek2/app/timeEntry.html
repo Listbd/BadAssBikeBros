@@ -2,7 +2,7 @@
     <form class="form-horizontal">
         <fieldset class="col-sm-12 col-lg-12 col-md-12">
             <div class="form-group">
-                <div class="panel panel-default" ng-repeat="dayEntries in vm.timeEntries">
+                <div class="panel panel-default" ng-repeat="dayEntries in vm.timeEntries | orderBy: 'sortIndex'">
                     <div class="panel-heading">
                         <h3 class="panel-title">{{ dayEntries.dateDisplay }}</h3>
                     </div>
@@ -33,8 +33,8 @@
                                     </td>
                                     <td><input class="form-control" type="dateTimeLocal" ng-model="vm.blankTimeEntry.TimeIn"></input></td>
                                     <td><input class="form-control" type="dateTimeLocal" ng-model="vm.blankTimeEntry.TimeOut"></input></td>
-                                    <td><input class="form-control"  type="number" disabled="disabled" ng-model="vm.blankTimeEntry.Hours" /></td>
-                                    <td><input class="form-control"  ng-model="vm.blankTimeEntry.Comment" /></td>
+                                    <td><input class="form-control" type="number" disabled="disabled" ng-model="vm.blankTimeEntry.Hours" /></td>
+                                    <td><input class="form-control" ng-model="vm.blankTimeEntry.Comment" /></td>
                                     <td><button type="button" class="btn btn-success" ng-disabled="vm.blankTimeEntry.Task === undefined" ng-click="vm.startWork()">Start Work</button></td>
                                 </tr>
                                 <tr ng-repeat="te in dayEntries">

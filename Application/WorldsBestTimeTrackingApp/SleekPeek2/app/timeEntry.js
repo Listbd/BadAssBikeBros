@@ -22,15 +22,25 @@
         function activate() {
             resetBlankTimeEntry();
 
-            var today = moment(Date.now()).format('YYYY-MM-DD');
-            var yesterday = moment(Date.now()).subtract(1, 'days').format('YYYY-MM-DD');
+            //var today = moment(Date.now()).format('YYYY-MM-DD');
+            //var yesterday = moment(Date.now()).subtract(1, 'days').format('YYYY-MM-DD');
+            var daysToPull = 10;
+            for (var i = 0; i < daysToPull; i++)
+            {
+                getTimeEntriesForDate(moment(Date.now()).subtract(i, 'days').format('YYYY-MM-DD'), i);
+            }
 
-            getTimeEntriesForDate(today);
-            getTimeEntriesForDate(yesterday);
+            //getTimeEntriesForDate(today);
+            //getTimeEntriesForDate(yesterday);
             var promises = [getProjects()];
             common.activateController(promises, controllerId).then(function () { });
 
             //    vm.name = "fiduciary";
+        }
+
+        function getTimeEntriesForSpan(daysToPull)
+        {
+
         }
 
         function getProjects() {
@@ -120,7 +130,7 @@
         }
 
 
-        function getTimeEntriesForDate(dateToGet) {
+        function getTimeEntriesForDate(dateToGet, sortIndex) {
             return timeTracking.getTimeEntriesForDate(dateToGet)
                 .success(function (response) {
                     common.$timeout(function () {
@@ -128,7 +138,8 @@
                         if (timeEntries.length > 0) {
                             vm.timeEntries.push(response);
                             vm.timeEntries[vm.timeEntries.length - 1].dateDisplay = dateToGet;
-                            vm.timeEntries[vm.timeEntries.length -1].reverse(); // TEMP, should sort, but not sure why it doesn't work
+                            vm.timeEntries[vm.timeEntries.length - 1].sortIndex = sortIndex;
+                            vm.timeEntries[vm.timeEntries.length - 1].reverse(); // TEMP, should sort, but not sure why it doesn't work
 
                             //treeMe(vm.timeEntries);
 

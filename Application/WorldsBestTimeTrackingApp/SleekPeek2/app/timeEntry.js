@@ -124,6 +124,17 @@
             });
         }
 
+        vm.totalDay = function (data) {
+            var total = 0;
+            var y = moment(data[0].TotalTime);
+            for (var i = 0; i < data.length; i++) {
+                var t = data[i].TotalTime;
+                var x = moment(t).add(y);
+                total += data[i].TotalTime;
+            }
+            return 0; //total;
+        }
+
         function refreshDay(day) {
             var dayOnly = day.substring(0, 10);
             for (var i = 0; i < vm.timeEntries.length; i++)

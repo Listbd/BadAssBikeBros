@@ -156,6 +156,17 @@
             return r;
         }
 
+        //function getTimeEntries(timeDate) {
+        //    var url = apiurl + "/TimeEntries/date/" + timeDate + "?format=json&callId=" + common.generateGuid();
+        //    var r = $http({
+        //        url: url,
+        //        method: 'GET',
+        //        headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
+        //    });
+        //    return r;
+        //}
+
+
         function postTimeEntry(timeEntry) {
             var url = apiurl + "/TimeEntries?format=json&callId=" + common.generateGuid();
             var r = $http({

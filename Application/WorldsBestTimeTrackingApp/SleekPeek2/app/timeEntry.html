@@ -17,6 +17,7 @@
                                     <th>Hours</th>
                                     <th>Comment</th>
                                     <th>Actions</th>
+                                    <th>Id</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,15 +37,17 @@
                                     <td><input class="form-control"  type="number" ng-model="vm.blankTimeEntry.Hours" /></td>
                                     <td><input class="form-control"  ng-model="vm.blankTimeEntry.Comment" /></td>
                                     <td><button type="button" class="btn btn-success" ng-disabled="vm.blankTimeEntry.Task === undefined" ng-click="vm.startWork()">Start Work</button></td>
+                                    <td></td>
                                 </tr>
                                 <tr ng-repeat="te in vm.timeEntries | filter">
                                     <td ng-bind="te.ProjectName" />
                                     <td ng-bind="te.ProjectTaskName"/>
                                     <td ng-bind="te.TimeIn" />
                                     <td ng-bind="te.TimeOut"/>
-                                    <td ng-bind="te.Hours"/>
+                                    <td ng-bind="te.TotalTime"/>
                                     <td ng-bind="te.Comment"/>
                                     <td><button type="button" class="btn btn-danger" ng-show="te.TimeOut == undefined" ng-click="vm.stopWork(te)">Stop Work</button></td>
+                                    <td ng-bind="te.TimeEntryId" />
                                 </tr>
                             </tbody>
                         </table>

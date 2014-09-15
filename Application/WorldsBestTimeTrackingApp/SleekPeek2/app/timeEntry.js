@@ -55,9 +55,9 @@
                             if (vm.timeEntries[i].data[j].TimeOut == undefined) {
                                 var tin = moment(vm.timeEntries[i].data[j].TimeIn);
                                 var tout = moment(Date.now());
-                                var tt = tout.subtract(tin);
-                                vm.timeEntries[i].data[j].TotalTime = tt.format('d HH:mm:ss');
-                                //vm.timeEntries[i].data[j].TotalTime = Math.floor(tt.asHours()) + moment.utc(tt.asMilliseconds()).format(":mm:ss");
+                                var ms = tout.diff(tin);
+                                var d = moment.duration(ms);
+                                vm.timeEntries[i].data[j].TotalTime = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
                             }
                         }
                     }

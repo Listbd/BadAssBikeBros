@@ -56,7 +56,8 @@
                                 var tin = moment(vm.timeEntries[i].data[j].TimeIn);
                                 var tout = moment(Date.now());
                                 var tt = tout.subtract(tin);
-                                vm.timeEntries[i].data[j].TotalTime = tt.format('HH:mm:ss');
+                                vm.timeEntries[i].data[j].TotalTime = tt.format('d HH:mm:ss');
+                                //vm.timeEntries[i].data[j].TotalTime = Math.floor(tt.asHours()) + moment.utc(tt.asMilliseconds()).format(":mm:ss");
                             }
                         }
                     }
@@ -166,12 +167,15 @@
             }
         }
 
+        // A bit ugly - refactor
         function refreshDay(day) {
+            var found = false;
             var dayOnly = day.substring(0, 10);
             for (var i = 0; i < vm.timeEntries.length; i++)
             {
                 if (vm.timeEntries[i].dateDisplay == dayOnly)
                 {
+                    found = true;
                     return timeTracking.getTimeEntriesForDate(dayOnly)
                     .success(function (response) {
                         common.$timeout(function () {
@@ -186,6 +190,26 @@
                         return null;
                     });
                 }
+            }
+            if (!found) {
+                // new day, brand new, something makes you feel like seeing it through
+                return timeTracking.getTimeEntriesForDate(dayOnly)
+                .success(function (response) {
+                    common.$timeout(function () {
+                        if (response.length > 0) {
+                            var newEntry = {
+                                'data': response.reverse(),
+                                'dateDisplay': dayOnly,
+                                'sortIndex': vm.timeEntries.length
+                            }
+                            vm.timeEntries.push(newEntry);
+                        }
+                    })
+                    return null;
+                }).error(function (error) {
+                    common.reportError(error);
+                    return null;
+                });
             }
         }
 

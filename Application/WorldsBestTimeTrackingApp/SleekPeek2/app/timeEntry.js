@@ -22,7 +22,7 @@
         function activate() {
             resetBlankTimeEntry();
 
-            var promises = [getProjects()];
+            var promises = [getProjects(), updateTime()];
 
             //var today = moment(Date.now()).format('YYYY-MM-DD');
             //var yesterday = moment(Date.now()).subtract(1, 'days').format('YYYY-MM-DD');
@@ -43,8 +43,26 @@
                     vm.timeEntries.push(newEntry);
                 }
             });
+        }
 
-            //    vm.name = "fiduciary";
+        // TODO - refactor to be more efficient and just keep track of the entries with
+        // no TimeOut instead of looping through everything
+        function updateTime() {
+            if (vm.timeEntries !== undefined) {
+                for (var i = 0; i < vm.timeEntries.length; i++) {
+                    if (vm.timeEntries[i] !== undefined && vm.timeEntries[i].data != undefined) {
+                        for (var j = 0; j < vm.timeEntries[i].data.length; j++) {
+                            if (vm.timeEntries[i].data[j].TimeOut == undefined) {
+                                var tin = moment(vm.timeEntries[i].data[j].TimeIn);
+                                var tout = moment(Date.now());
+                                var tt = tout.subtract(tin);
+                                vm.timeEntries[i].data[j].TotalTime = tt.format('HH:mm:ss');
+                            }
+                        }
+                    }
+                }
+            }
+            common.$timeout(updateTime, 1000, true);
         }
 
         function getProjects() {
@@ -80,6 +98,8 @@
             }
 
         }
+
+
 
         vm.updateTasks = function () {
             vm.blankTimeEntry.Task = undefined;

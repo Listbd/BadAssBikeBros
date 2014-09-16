@@ -29,7 +29,7 @@
             var daysToPull = 10;
             for (var i = 0; i < daysToPull; i++)
             {
-                promises.push(getTimeEntriesForDate(moment(Date.now()).subtract(i, 'days').format('YYYY-MM-DD'), i));
+                promises.push(getTimeEntriesForDate(moment(Date.now()).subtract(i, 'days').format('YYYY-MM-DD')));
             }
 
             common.activateController(promises, controllerId).then(function () { 
@@ -38,7 +38,6 @@
                     var newEntry = {
                         'data': [],
                         'dateDisplay': moment(Date.now()).format('YYYY-MM-DD'),
-                        'sortIndex': 0
                     }
                     vm.timeEntries.push(newEntry);
                 }
@@ -100,7 +99,10 @@
 
         }
 
-
+        // custom order by so days are from today into the past
+        vm.daysOrderBy = function (day) {
+            return -moment(day.dateDisplay);
+        };
 
         vm.updateTasks = function () {
             vm.blankTimeEntry.Task = undefined;
@@ -155,16 +157,12 @@
         }
 
         vm.totalDay = function (data) {
-            return 0; //total;
-
-
-            var total = 0;
-            var y = moment(data[0].TotalTime);
-            for (var i = 0; i < data.length; i++) {
-                var t = data[i].TotalTime;
-                var x = moment(t).add(y);
-                total += data[i].TotalTime;
+            var total = moment.duration(data[0].TotalTime);
+            for (var i = 1; i < data.length; i++) {
+                var t = moment.duration(data[i].TotalTime).add(total);
+                total = t;
             }
+            return Math.floor(total.asHours()) + moment.utc(total.asMilliseconds()).format(":mm:ss");
         }
 
         // A bit ugly - refactor
@@ -200,7 +198,6 @@
                             var newEntry = {
                                 'data': response.reverse(),
                                 'dateDisplay': dayOnly,
-                                'sortIndex': vm.timeEntries.length
                             }
                             vm.timeEntries.push(newEntry);
                         }
@@ -214,7 +211,7 @@
         }
 
 
-        function getTimeEntriesForDate(dateToGet, sortIndex) {
+        function getTimeEntriesForDate(dateToGet) {
             return timeTracking.getTimeEntriesForDate(dateToGet)
                 .success(function (response) {
                     common.$timeout(function () {
@@ -222,7 +219,6 @@
                             var newEntry = {
                                 'data': response.reverse(),
                                 'dateDisplay' : dateToGet,
-                                'sortIndex' : sortIndex
                             }
                             vm.timeEntries.push(newEntry);
                         }

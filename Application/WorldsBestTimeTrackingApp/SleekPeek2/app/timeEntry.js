@@ -16,6 +16,7 @@
         var vm = this;
 
         vm.timeEntries = [];
+        vm.activeTimer = {};
 
         activate();
 
@@ -62,8 +63,17 @@
                     }
                 }
             }
-            common.$timeout(updateTime, 1000, true);
+            // set active timer
+            vm.activeTimer = common.$timeout(updateTime, 1000, true);
         }
+
+        // Need to clean up timer
+        // ?????
+        //vm.$on('$destroy', function () {
+        //    if (vm.activeTimer !== undefined) {
+        //        common.$timeout.cancel(vm.activeTimer);
+        //    }
+        //});
 
         function getProjects() {
             return timeTracking.getProjects()
@@ -103,6 +113,11 @@
         vm.daysOrderBy = function (day) {
             return -moment(day.dateDisplay);
         };
+
+        vm.formatDuration = function (dur) {
+            var t = moment.duration(dur);
+            return Math.floor(t.asHours()) + moment.utc(t.asMilliseconds()).format(":mm:ss");
+        }
 
         vm.updateTasks = function () {
             vm.blankTimeEntry.Task = undefined;
@@ -162,7 +177,7 @@
                 var t = moment.duration(data[i].TotalTime).add(total);
                 total = t;
             }
-            return Math.floor(total.asHours()) + moment.utc(total.asMilliseconds()).format(":mm:ss");
+            return vm.formatDuration(total);
         }
 
         // A bit ugly - refactor

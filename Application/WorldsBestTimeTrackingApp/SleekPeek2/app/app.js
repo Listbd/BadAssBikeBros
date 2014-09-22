@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var app = angular.module('app', ['ngCookies', 'ngRoute', 'ngGrid', 'ngResource', 'angular-loading-bar', 'common']);
+    var app = angular.module('app', ['ngCookies', 'ngRoute', 'ngGrid', 'ngResource', 'ngAnimate', 'angular-loading-bar', 'common']);
 
     app.config(function ($routeProvider) {
         $routeProvider

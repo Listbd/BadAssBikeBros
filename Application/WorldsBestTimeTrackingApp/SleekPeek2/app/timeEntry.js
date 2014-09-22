@@ -171,6 +171,24 @@
             });
         }
 
+        vm.deleteEntry = function (te) {
+            if (confirm('Are you sure you want to delete?') == true)
+            {
+                return timeTracking.deleteTimeEntry(te)
+                .success(function (response) {
+                    common.$timeout(function () {
+                        // Refresh the day
+                        refreshDay(te.TimeIn);
+                        resetBlankTimeEntry();
+                    })
+                    return null;
+                }).error(function (error) {
+                    common.reportError(error);
+                    return null;
+                });
+            }
+        }
+
         vm.totalDay = function (data) {
             var total = moment.duration(data[0].TotalTime);
             for (var i = 1; i < data.length; i++) {

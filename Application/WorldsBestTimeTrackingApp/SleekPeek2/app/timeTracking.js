@@ -24,7 +24,8 @@
             getTimeEntries: getTimeEntries,
             getTimeEntriesForDate : getTimeEntriesForDate,
             postTimeEntry: postTimeEntry,
-            putTimeEntry: putTimeEntry
+            putTimeEntry: putTimeEntry,
+            deleteTimeEntry : deleteTimeEntry
 
         };
         return service;
@@ -186,6 +187,16 @@
                 method: 'PUT',
                 headers: { 'Authorization': 'Basic ' + authService.getAuthCode() },
                 data: timeEntry
+            });
+            return r;
+        }
+
+        function deleteTimeEntry(timeEntry) {
+            var url = apiurl + "/TimeEntries/" + timeEntry.TimeEntryId + "?format=json&callId=" + common.generateGuid();
+            var r = $http({
+                url: url,
+                method: 'DELETE',
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
             });
             return r;
         }

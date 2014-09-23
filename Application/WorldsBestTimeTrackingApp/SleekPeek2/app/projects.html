@@ -9,24 +9,24 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Id</th>
-                                <th>External Key</th>
-                                <th>Action</th>
+                                <th width="50%">Name</th>
+                                <th width="15%">Number of Tasks</th>
+                                <th width="20%">External Key</th>
+                                <th style="text-align:center" width="15%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="project in vm.projects">
                                 <td class="clickable" ng-click="vm.goToDetail(project)">{{project.Name}}</td>
-                                <td class="clickable" ng-click="vm.goToDetail(project)">{{project.ProjectId}}</td>
+                                <td align="center" class="clickable" ng-click="vm.goToDetail(project)">{{project.ProjectTasks.length}}</td>
                                 <td class="clickable" ng-click="vm.goToDetail(project)">{{project.ExternalSystemKey}}</td>
-                                <td><button type="button" class="btn btn-danger" ng-click="vm.deleteProject(project)">Delete</button></td>
+                                <td align="center"><button type="button" class="btn btn-danger" ng-click="vm.deleteProject(project)">Delete</button></td>
                             </tr>
                             <tr>
                                 <td><input class="form-control" ng-model=vm.blankProject.Name /></td>
                                 <td><input class="form-control" readonly="readonly" /></td>
                                 <td><input class="form-control" ng-model=vm.blankProject.ExternalSystemKey /></td>
-                                <td><button type="button" class="btn btn-success" ng-click="vm.addProject(vm.blankProject)">Add</button></td>
+                                <td align="center"><button type="button" class="btn btn-success" ng-click="vm.addProject(vm.blankProject)">Add</button></td>
                             </tr>
                         </tbody>
                     </table>

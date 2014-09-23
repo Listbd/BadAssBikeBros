@@ -104,7 +104,8 @@
                 "TimeIn": undefined,
                 "TimeOut": undefined,
                 "Hours": 0,
-                "Comment": ""
+                "Comment": "",
+                "isInEditMode" : false
             }
 
         }
@@ -157,18 +158,36 @@
                 te.TimeOut = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
             }
 
+            return vm.updateEntry(te, true);
+        }
+
+        vm.updateEntry = function (te, resetBlankDay) {
             return timeTracking.putTimeEntry(te)
             .success(function (response) {
                 common.$timeout(function () {
+                    if (resetBlankDay) {
+                        resetBlankTimeEntry();
+                    }
+                    else {
+                        te.isInEditMode = false;
+                    }
                     // Refresh the day
                     refreshDay(te.TimeIn);
-                    resetBlankTimeEntry();
                 })
                 return null;
             }).error(function (error) {
                 common.reportError(error);
                 return null;
             });
+        }
+
+        vm.beginEditEntry = function (te) {
+            for (var dayIndex = 0; dayIndex < vm.timeEntries.length; dayIndex++) {
+                for (var timeEntryIndex = 0; timeEntryIndex < vm.timeEntries[dayIndex].data.length; timeEntryIndex++) {
+                    vm.timeEntries[dayIndex].data[timeEntryIndex].isInEditMode = false;
+                }
+            }
+            te.isInEditMode = true;
         }
 
         vm.deleteEntry = function (te) {

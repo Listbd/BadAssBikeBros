@@ -199,6 +199,10 @@
             te.isInEditMode = true;
         }
 
+        vm.cancelEditEntry = function (te) {
+            te.isInEditMode = false;
+        }
+
         vm.deleteEntry = function (te) {
             if (confirm('Are you sure you want to delete?') == true)
             {

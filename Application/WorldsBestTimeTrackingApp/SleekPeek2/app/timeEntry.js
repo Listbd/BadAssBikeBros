@@ -120,6 +120,15 @@
             return Math.floor(t.asHours()) + moment.utc(t.asMilliseconds()).format(":mm:ss");
         }
 
+        vm.formatToTime = function (datetime) {
+            if (datetime) {
+                return moment(datetime).format("h:mm A");
+            }
+            else {
+                return "";
+            }
+        }
+
         vm.updateTasks = function () {
             vm.blankTimeEntry.Task = undefined;
             vm.blankTimeEntry.Tasks = vm.blankTimeEntry.Project.ProjectTasks;

@@ -54,7 +54,7 @@
                 .success(function (response) {
                     authService.setCredentials(vm.username, vm.password);
                     $location.path('/timeEntry/');
-                    msgSuccess("Welcome Back!");
+                    //msgSuccess("Welcome Back!");
                 }).error(function (error) {
                     common.reportError(error);
                     vm.errorMessage = "Unauthorized";

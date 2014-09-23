@@ -40,8 +40,8 @@
                                 <tr ng-repeat="te in dayEntry.data">
                                     <td ng-bind="te.ProjectName" />
                                     <td ng-bind="te.ProjectTaskName" />
-                                    <td ng-show="!te.isInEditMode" ng-bind="te.TimeIn" class="clickable" ng-click="vm.beginEditEntry(te)" />
-                                    <td ng-show="!te.isInEditMode" ng-bind="te.TimeOut" class="clickable" ng-click="vm.beginEditEntry(te)" />
+                                    <td ng-show="!te.isInEditMode" ng-bind="vm.formatToTime(te.TimeIn)" class="clickable" ng-click="vm.beginEditEntry(te)" />
+                                    <td ng-show="!te.isInEditMode" ng-bind="vm.formatToTime(te.TimeOut)" class="clickable" ng-click="vm.beginEditEntry(te)" />
                                     <td ng-show="te.isInEditMode"><input class="form-control" type="dateTimeLocal" ng-model="te.TimeIn"></input></td>
                                     <td ng-show="te.isInEditMode"><input class="form-control" type="dateTimeLocal" ng-model="te.TimeOut"></input></td>
                                     <td style="text-align:center" ng-bind="vm.formatDuration(te.TotalTime)" />

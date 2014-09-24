@@ -43,9 +43,9 @@
                                     <td ng-show="!te.isInEditMode" ng-bind="vm.formatToTime(te.TimeIn)" class="clickable" ng-click="vm.beginEditEntry(te)" />
                                     <td ng-show="!te.isInEditMode" ng-bind="vm.formatToTime(te.TimeOut)" class="clickable" ng-click="vm.beginEditEntry(te)" />
                                     <td ng-show="te.isInEditMode">
-                                        <input class="form-control" type="dateTimeLocal" ng-model="te.TimeIn" ui-keydown="{esc: 'vm.cancelEditEntry(te)'}" /></input>
+                                        <input class="form-control" type="dateTimeLocal" ng-model="te.TimeIn" ui-keydown="{esc: 'vm.cancelEditEntry(te)'}" />
                                     </td>
-                                    <td ng-show="te.isInEditMode"><input class="form-control" type="dateTimeLocal" ng-model="te.TimeOut"></input></td>
+                                    <td ng-show="te.isInEditMode"><input class="form-control" type="dateTimeLocal" ng-model="te.TimeOut" /></td>
                                     <td style="text-align:center" ng-bind="vm.formatDuration(te.TotalTime)" />
                                     <td ng-show="!te.isInEditMode" ng-bind="te.Comment" class="clickable" ng-click="vm.beginEditEntry(te)" />
                                     <td ng-show="te.isInEditMode"><input class="form-control" ng-model="te.Comment" /></td>

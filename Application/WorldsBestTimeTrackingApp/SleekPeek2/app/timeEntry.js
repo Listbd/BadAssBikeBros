@@ -171,6 +171,9 @@
         }
 
         vm.updateEntry = function (te, resetBlankDay) {
+            // validate times
+            // This is the regular expression for date, time, or datetime (MM/DD/YYYY hh:mm:ss), military or am/pm separators of /-.
+            //var rr = "^(?ni:(?=\d)(?'month'0?[1-9]|1[012])(?'sep'[/.-])((?'day'((?<!(\2((0?[2469])|11)\2))31)|(?<!\2(0?2)\2)(29|30)|((?<=((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|(16|[2468][048]|[3579][26])00)\2\3\2)29)|((0?[1-9])|(1\d)|(2[0-8])))\2(?'year'((1[6-9])|([2-9]\d))\d\d)(?:(?=\x20\d)\x20|$))?((?<time>((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2}))?)$";
             return timeTracking.putTimeEntry(te)
             .success(function (response) {
                 common.$timeout(function () {

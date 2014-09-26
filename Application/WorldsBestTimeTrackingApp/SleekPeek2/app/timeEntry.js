@@ -243,7 +243,7 @@
         }
 
         vm.deleteEntry = function (te) {
-            if (confirm('Are you sure you want to delete?') == true)
+            //if (confirm('Are you sure you want to delete?') == true)
             {
                 return timeTracking.deleteTimeEntry(te)
                 .success(function (response) {

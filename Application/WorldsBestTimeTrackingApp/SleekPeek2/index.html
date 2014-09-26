@@ -39,10 +39,13 @@
                 <div data-ng-class="{true:'nav-collapse collapse',false:'nav-collapse'}[vm.isCollapsed==true]">
                     <ul class="nav navbar-nav navbar-right" style="margin-right:30px">
                         <li ng-class="{active:isActive('/projects')}">
-                            <a href="#/projects">Projects</a>
+                            <a href="#/projects"><i class="fa fa-list-alt"></i> Projects</a>
                         </li>
                         <li ng-class="{active:isActive('/timeEntry')}">
-                            <a href="#/timeEntry">Time Entry</a>
+                            <a href="#/timeEntry"><i class="fa fa-clock-o"></i> Time Entry</a>
+                        </li>
+                        <li>
+                            <a href="#/login"><i class="fa fa-sign-out"></i> Log Out</a>
                         </li>
                     </ul>
                 </div>

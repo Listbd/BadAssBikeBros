@@ -181,14 +181,23 @@
         }
 
         vm.resumeWork = function (te) {
-            te.TimeIn = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
-            te.TimeOut = undefined;
+
+            var newEntry = {
+                "ProjectRoleId": te.ProjectRoleId,
+                "ProjectTaskId": te.ProjectTaskId,
+                "Billable": te.Billable,
+                "TimeIn": moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+                "TimeOut": undefined,
+                "Hours": 0,
+                "Comment": te.Comment,
+                "isInEditMode": false
+            }
             
-            return timeTracking.postTimeEntry(te)
+            return timeTracking.postTimeEntry(newEntry)
             .success(function (response) {
                 common.$timeout(function () {
                     // Refresh the day
-                    refreshDay(te.TimeIn);
+                    refreshDay(newEntry.TimeIn);
                 })
                 return null;
             }).error(function (error) {

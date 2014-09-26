@@ -120,9 +120,19 @@
             return Math.floor(t.asHours()) + moment.utc(t.asMilliseconds()).format(":mm:ss");
         }
 
-        vm.formatToTime = function (datetime) {
+        vm.formatToTime = function (datetime, relativeTo) {
             if (datetime) {
-                return moment(datetime).format("h:mm A");
+                var suffix = "";
+                if (relativeTo) {
+                    var daysDiff = moment(datetime).dayOfYear() - moment(relativeTo).dayOfYear();
+                    if (daysDiff > 0) {
+                        suffix = " (+" + daysDiff + ")";
+                    }
+                    else if (daysDiff < 0) {
+                        suffix = " (" + daysDiff + ")";
+                    }
+                }
+                return moment(datetime).format("h:mm A") + suffix;
             }
             else {
                 return "";

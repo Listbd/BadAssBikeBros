@@ -180,6 +180,23 @@
             return vm.updateEntry(te, true);
         }
 
+        vm.resumeWork = function (te) {
+            te.TimeIn = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+            te.TimeOut = undefined;
+            
+            return timeTracking.postTimeEntry(te)
+            .success(function (response) {
+                common.$timeout(function () {
+                    // Refresh the day
+                    refreshDay(te.TimeIn);
+                })
+                return null;
+            }).error(function (error) {
+                common.reportError(error);
+                return null;
+            });
+        }
+
         vm.updateEntry = function (te, resetBlankDay) {
             // validate times
             // This is the regular expression for date, time, or datetime (MM/DD/YYYY hh:mm:ss), military or am/pm separators of /-.

@@ -35,7 +35,7 @@
                                     <td><input class="form-control" type="dateTimeLocal" ng-model="vm.blankTimeEntry.TimeOut"></input></td>
                                     <td></td>
                                     <td><input class="form-control" ng-model="vm.blankTimeEntry.Comment" /></td>
-                                    <td align="center"><button type="button" class="btn btn-success" ng-disabled="vm.blankTimeEntry.Task === undefined" ng-click="vm.startWork()"><i class="fa fa-plus-square fa-lg"></i> Start Work</button></td>
+                                    <td align="center"><button type="button" class="btn btn-default" ng-disabled="vm.blankTimeEntry.Task === undefined" ng-click="vm.startWork()"><i class="fa fa-play"></i></button></td>
                                 </tr>
                                 <tr ng-repeat="te in dayEntry.data">
                                     <td ng-bind="te.ProjectName" />
@@ -50,7 +50,7 @@
                                     <td ng-show="!te.isInEditMode" ng-bind="te.Comment" class="clickable" ng-click="vm.beginEditEntry(te)" />
                                     <td ng-show="te.isInEditMode"><input class="form-control" ng-model="te.Comment" /></td>
                                     <td align="center" style="white-space: nowrap;">
-                                        <button type="button" class="btn btn-danger" ng-show="te.TimeOut == undefined" ng-click="vm.stopWork(te)"><i class="fa fa-check-square"></i> Stop Work</button>
+                                        <button type="button" class="btn btn-default" ng-show="te.TimeOut == undefined" ng-click="vm.stopWork(te)"><i class="fa fa-pause"></i></button>
                                         <button type="button" class="btn btn-success" ng-show="te.isInEditMode" ng-click="vm.updateEntry(te)"><i class="fa fa-save fa-lg"></i></button>
                                         <button type="button" class="btn btn-danger" ng-show="te.isInEditMode" ng-click="vm.deleteEntry(te)"><i class="fa fa-trash-o fa-lg"></i></button>
                                         <button type="button" class="btn btn-info" ng-show="te.isInEditMode" ng-click="vm.cancelEditEntry(te)"><i class="fa fa-undo fa-lg"></i></button>

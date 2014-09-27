@@ -17,6 +17,7 @@
             getProject: getProject,
             postProject: postProject,
             deleteProject: deleteProject,
+            getProjectHours : getProjectHours,
             postProjectRole: postProjectRole,
             deleteProjectRole : deleteProjectRole,
             postProjectTask: postProjectTask,
@@ -101,6 +102,16 @@
             var r = $http({
                 url: url,
                 method: 'DELETE',
+                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
+            });
+            return r;
+        }
+
+        function getProjectHours() {
+            var url = apiurl + "/ProjectHours?format=json&callId=" + common.generateGuid();
+            var r = $http({
+                url: url,
+                method: 'GET',
                 headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
             });
             return r;

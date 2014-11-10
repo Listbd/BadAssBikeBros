@@ -28,6 +28,7 @@
     <script src="app/login.js"></script>
     <script src="app/projects.js"></script>
     <script src="app/project.js"></script>
+    <script src="app/export.js"></script>
     <script src="app/timeEntry.js"></script>
     <script src="app/timeTracking.js"></script>
 
@@ -43,6 +44,9 @@
                         </li>
                         <li ng-class="{active:isActive('/timeEntry')}">
                             <a href="#/timeEntry"><i class="fa fa-clock-o"></i><span class="hidden-xs hidden-sm"> Time Entry</span></a>
+                        </li>
+                        <li ng-class="{active:isActive('/export')}">
+                            <a href="#/export"><i class="fa fa-cloud-download"></i><span class="hidden-xs hidden-sm"> Export</span></a>
                         </li>
                         <li>
                             <a href="#/login"><i class="fa fa-sign-out"></i><span class="hidden-xs hidden-sm"> Log Out</span></a>

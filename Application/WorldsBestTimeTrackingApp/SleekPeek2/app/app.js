@@ -14,6 +14,9 @@
           .when('/project/:projectId', {
               templateUrl: 'app/project.html'
           })        
+          .when('/export', {
+              templateUrl: 'app/export.html'
+          })
           .when('/', {
               templateUrl: 'app/login.html'
           })

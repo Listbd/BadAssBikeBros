@@ -107,14 +107,14 @@
             return r;
         }
 
-        function getProjectHours() {
-            var url = apiurl + "/ProjectHours?format=json&callId=" + common.generateGuid();
-            var r = $http({
-                url: url,
-                method: 'GET',
-                headers: { 'Authorization': 'Basic ' + authService.getAuthCode() }
-            });
-            return r;
+        function getProjectHours(format, from, to) {
+            var url = apiurl + "/ProjectHours?format=" + format;
+            // TODO - add 1 day to "to" so it includes the end date and not just up to it
+            if (from != undefined && to != undefined) {
+                url += "&dateStart=" + from + "&dateEnd=" + to;
+            }
+            url += "&callId=" + common.generateGuid();
+            return url;
         }
 
         function postProjectRole(projectRole) {

@@ -40,10 +40,12 @@
 
         function exportTimeData(fmt) {
             // TODO - this is fragile right now, need to use a datepicker
-            var from = vm.from;
-            var dt = new Date(vm.to);
-            dt.setDate(dt.getDate() + 1); // web service is non-inclusive end date
-            var to = dt.toISOString().slice(0, 10);
+            if (vm.from != undefined && vm.to != undefined) {
+                var from = vm.from;
+                var dt = new Date(vm.to);
+                dt.setDate(dt.getDate() + 1); // web service is non-inclusive end date
+                var to = dt.toISOString().slice(0, 10);
+            }
             var win = window.open(timeTracking.getProjectHours(fmt, from, to));
         }
 

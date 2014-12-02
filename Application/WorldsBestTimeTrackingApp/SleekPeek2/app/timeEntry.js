@@ -144,8 +144,30 @@
             vm.blankTimeEntry.Tasks = vm.blankTimeEntry.Project.ProjectTasks;
             if (vm.blankTimeEntry.Tasks.length === 1)
                 vm.blankTimeEntry.Task = vm.blankTimeEntry.Tasks[0];
-            // Hard-code role
-            vm.blankTimeEntry.ProjectRoleId = vm.blankTimeEntry.Project.ProjectRoles[0].ProjectRoleId;
+
+            // If we don't have a role, let's add one called "Default".
+            if (vm.blankTimeEntry.Project.ProjectRoles.length === 0) {
+                var newDefaultRole = {
+                    "Name": "Default",
+                    "ProjectId": vm.blankTimeEntry.Project.ProjectId
+                }
+                timeTracking.postProjectRole(newDefaultRole).success(function (response) {
+                    common.$timeout(function () {
+                        var role = response;
+                        vm.blankTimeEntry.Project.ProjectRoles.push(role);
+                        // Set the role ID on our blank time entry entity
+                        vm.blankTimeEntry.ProjectRoleId = role.ProjectRoleId;
+                    })
+                    return null;
+                }).error(function (error) {
+                    common.reportError(error);
+                    return null;
+                });
+            }
+            // Otherwise, let's hard-code the role to the first in the collection.
+            else {
+                vm.blankTimeEntry.ProjectRoleId = vm.blankTimeEntry.Project.ProjectRoles[0].ProjectRoleId;
+            }
         }
 
         vm.startWork = function () {

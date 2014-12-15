@@ -283,13 +283,28 @@
         }
 
         vm.totalDay = function (data) {
-            var total = moment.duration(data[0].TotalTime);
-            for (var i = 1; i < data.length; i++) {
-                var t = moment.duration(data[i].TotalTime).add(total);
-                total = t;
+            if (data.length > 0) {
+                var total = moment.duration(data[0].TotalTime);
+                for (var i = 1; i < data.length; i++) {
+                    var t = moment.duration(data[i].TotalTime).add(total);
+                    total = t;
+                }
+                return vm.formatDuration(total);
             }
-            return vm.formatDuration(total);
+            else {
+                return 0;
+            }
         }
+
+        vm.onTimeInSet = function (newDate, oldDate, te) {
+            newDate = moment(newDate).format("YYYY-MM-DD HH:mm:ss");
+            te.TimeIn = newDate;
+        }
+        vm.onTimeOutSet = function (newDate, oldDate, te) {
+            newDate = moment(newDate).format("YYYY-MM-DD HH:mm:ss");
+            te.TimeOut = newDate;
+        }
+
 
         // A bit ugly - refactor
         function refreshDay(day) {

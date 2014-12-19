@@ -124,7 +124,9 @@
             if (datetime) {
                 var suffix = "";
                 if (relativeTo) {
-                    var daysDiff = moment(datetime).dayOfYear() - moment(relativeTo).dayOfYear();
+                    //var daysDiff = moment(datetime).dayOfYear() - moment(relativeTo).dayOfYear();
+                    var daysDiff = moment(moment(datetime).startOf('day').diff(moment(relativeTo).startOf('day'), 'days'));
+
                     if (daysDiff > 0) {
                         suffix = " (+" + daysDiff + ")";
                     }
@@ -170,11 +172,18 @@
             }
         }
 
-        vm.startWork = function () {
-            //vm.blankTimeEntry.TimeIn = Date.now();
-            //vm.blankTimeEntry.TimeIn = '2014-09-09T00:29:10.0334982+00:00';
+        vm.startWork = function (dayEntryDisplay) {
             if (vm.blankTimeEntry.TimeIn == undefined || vm.blankTimeEntry.TimeIn.length == 0) {
                 vm.blankTimeEntry.TimeIn = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+            }
+
+            // Must be in a decent format for the api call
+            vm.blankTimeEntry.TimeIn = convertTimeEntryToDate(vm.blankTimeEntry.TimeIn, dayEntryDisplay);
+            vm.blankTimeEntry.TimeOut = convertTimeEntryToDate(vm.blankTimeEntry.TimeOut, dayEntryDisplay);
+
+            if (blankTimeEntry.TimeIn == 'Invalid Date' || blankTimeEntry.TimeOut == 'Invalid Date') {
+                msgError("Entry not added. A date is invalid");
+                return null;
             }
 
             vm.blankTimeEntry.ProjectTaskId = vm.blankTimeEntry.Task.ProjectTaskId;
@@ -196,7 +205,7 @@
             //vm.blankTimeEntry.TimeIn = Date.now();
             //vm.blankTimeEntry.TimeIn = '2014-09-09T00:29:10.0334982+00:00';
             if (te.TimeOut == undefined || te.TimeOut.length == 0) {
-                te.TimeOut = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+                te.TimeOut = moment(Date.now()).format("YYYY-MM-DDTHH:mm:ss");
             }
 
             return vm.updateEntry(te, true);
@@ -228,10 +237,19 @@
             });
         }
 
-        vm.updateEntry = function (te, resetBlankDay) {
+        vm.updateEntry = function (te, resetBlankDay, dayEntryDisplay) {
             // validate times
             // This is the regular expression for date, time, or datetime (MM/DD/YYYY hh:mm:ss), military or am/pm separators of /-.
             //var rr = "^(?ni:(?=\d)(?'month'0?[1-9]|1[012])(?'sep'[/.-])((?'day'((?<!(\2((0?[2469])|11)\2))31)|(?<!\2(0?2)\2)(29|30)|((?<=((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|(16|[2468][048]|[3579][26])00)\2\3\2)29)|((0?[1-9])|(1\d)|(2[0-8])))\2(?'year'((1[6-9])|([2-9]\d))\d\d)(?:(?=\x20\d)\x20|$))?((?<time>((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2}))?)$";
+
+            te.TimeIn = convertTimeEntryToDate(te.TimeIn, dayEntryDisplay);
+            te.TimeOut = convertTimeEntryToDate(te.TimeOut, dayEntryDisplay);
+
+            if (te.TimeIn == 'Invalid Date' || te.TimeOut == 'Invalid Date') {
+                msgError("Entry not updated. A date is invalid");
+                return null;
+            }
+
             return timeTracking.putTimeEntry(te)
             .success(function (response) {
                 common.$timeout(function () {
@@ -249,6 +267,55 @@
                 common.reportError(error);
                 return null;
             });
+        }
+
+        function convertTimeEntryToDate(dateTimeAsString, dayEntryDisplay) {
+            // it is more reliable to just compute the Date ourselves to avoid browser differences
+            // (e.g. Chrome insists on converting the date to local time for us even though we create it in local time already)
+
+            // try piecing it together
+            // 1. count dashes
+            var test = dateTimeAsString;
+
+            var pieces = test.split(/[ T]/); // date and time split on space or T
+
+            // is there a date part?
+            var datepart = new Array();
+            if (test.match(/[-\/T]/) != null) {
+                datepart = pieces[0].split(/[\/-]/); // date could be dashes or slashes
+                pieces.shift();
+            }
+
+            var dayEntryPieces = dayEntryDisplay.split("-");
+            if (datepart.length == 0) {
+                // get day and month from day entry
+                datepart.push(dayEntryPieces[1]);
+                datepart.push(dayEntryPieces[2]);
+            }
+            if (datepart.length == 2) {
+                // assume we are missing the year, insert into front
+                datepart.splice(0, 0, dayEntryPieces[0]);
+            }
+
+            if (pieces.length > 0) {
+                var timepart = pieces[0].split(":");
+                // get this out of the way..
+                if (pieces[pieces.length - 1].toUpperCase() == 'PM') {
+                    timepart[0] = Number(timepart[0]) + 12;
+                }
+            }
+            while (timepart.length < 2) {
+                timepart.push(0);
+            }
+
+            test = new Date(datepart[0], datepart[1] - 1, datepart[2], timepart[0], timepart[1]);
+
+            if (test == 'Invalid date') {
+                return test;
+            }
+            else {
+                return moment(test).format("YYYY-MM-DDTHH:mm:ss");
+            }
         }
 
         vm.beginEditEntry = function (te) {
@@ -297,14 +364,11 @@
         }
 
         vm.onTimeInSet = function (newDate, oldDate, te) {
-            newDate = moment(newDate).format("YYYY-MM-DD HH:mm:ss");
-            te.TimeIn = newDate;
+            te.TimeIn = moment(newDate).format('YYYY-MM-DDTHH:mm:ss');
         }
         vm.onTimeOutSet = function (newDate, oldDate, te) {
-            newDate = moment(newDate).format("YYYY-MM-DD HH:mm:ss");
-            te.TimeOut = newDate;
+            te.TimeOut = moment(newDate).format('YYYY-MM-DDTHH:mm:ss');
         }
-
 
         // A bit ugly - refactor
         function refreshDay(day) {

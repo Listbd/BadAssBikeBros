@@ -179,7 +179,7 @@
 
             // Must be in a decent format for the api call
             vm.blankTimeEntry.TimeIn = convertTimeEntryToDate(vm.blankTimeEntry.TimeIn, dayEntryDisplay);
-            if (vm.blankTimeEntry.TimeOut !== undefined && vm.blankTimeEntry.TimeOut.length > 0) {
+            if (vm.blankTimeEntry.TimeOut !== undefined && vm.blankTimeEntry.TimeOut !== null && vm.blankTimeEntry.TimeOut.length > 0) {
                 vm.blankTimeEntry.TimeOut = convertTimeEntryToDate(vm.blankTimeEntry.TimeOut, dayEntryDisplay);
             }
 
@@ -206,7 +206,7 @@
         vm.stopWork = function (te) {
             //vm.blankTimeEntry.TimeIn = Date.now();
             //vm.blankTimeEntry.TimeIn = '2014-09-09T00:29:10.0334982+00:00';
-            if (te.TimeOut == undefined || te.TimeOut !== null || te.TimeOut.length == 0) {
+            if (te.TimeOut === undefined || te.TimeOut === null || te.TimeOut.length == 0) {
                 te.TimeOut = moment(Date.now()).format("YYYY-MM-DDTHH:mm:ss");
             }
 
@@ -293,15 +293,17 @@
                 pieces.shift();
             }
 
-            var dayEntryPieces = dayEntryDisplay.split("-");
-            if (datepart.length == 0) {
-                // get day and month from day entry
-                datepart.push(dayEntryPieces[1]);
-                datepart.push(dayEntryPieces[2]);
-            }
-            if (datepart.length == 2) {
-                // assume we are missing the year, insert into front
-                datepart.splice(0, 0, dayEntryPieces[0]);
+            if (dayEntryPieces !== undefined) {
+                var dayEntryPieces = dayEntryDisplay.split("-");
+                if (datepart.length == 0) {
+                    // get day and month from day entry
+                    datepart.push(dayEntryPieces[1]);
+                    datepart.push(dayEntryPieces[2]);
+                }
+                if (datepart.length == 2) {
+                    // assume we are missing the year, insert into front
+                    datepart.splice(0, 0, dayEntryPieces[0]);
+                }
             }
 
             if (pieces.length > 0) {

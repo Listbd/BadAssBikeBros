@@ -279,7 +279,7 @@
                 pieces.shift();
             }
 
-            if (dayEntryPieces !== undefined) {
+            if (dayEntryDisplay !== undefined) {
                 var dayEntryPieces = dayEntryDisplay.split("-");
                 if (datepart.length == 0) {
                     // get day and month from day entry

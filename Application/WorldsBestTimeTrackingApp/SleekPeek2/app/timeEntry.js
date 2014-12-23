@@ -25,8 +25,6 @@
 
             var promises = [getProjects(), updateTime()];
 
-            //var today = moment(Date.now()).format('YYYY-MM-DD');
-            //var yesterday = moment(Date.now()).subtract(1, 'days').format('YYYY-MM-DD');
             var daysToPull = 10;
             for (var i = 0; i < daysToPull; i++)
             {
@@ -66,14 +64,6 @@
             // set active timer
             vm.activeTimer = common.$timeout(updateTime, 1000, true);
         }
-
-        // Need to clean up timer
-        // ?????
-        //vm.$on('$destroy', function () {
-        //    if (vm.activeTimer !== undefined) {
-        //        common.$timeout.cancel(vm.activeTimer);
-        //    }
-        //});
 
         function getProjects() {
             return timeTracking.getProjects()
@@ -204,8 +194,6 @@
         }
 
         vm.stopWork = function (te) {
-            //vm.blankTimeEntry.TimeIn = Date.now();
-            //vm.blankTimeEntry.TimeIn = '2014-09-09T00:29:10.0334982+00:00';
             if (te.TimeOut === undefined || te.TimeOut === null || te.TimeOut.length == 0) {
                 te.TimeOut = moment(Date.now()).format("YYYY-MM-DDTHH:mm:ss");
             }
@@ -263,9 +251,7 @@
                     if (resetBlankDay) {
                         resetBlankTimeEntry();
                     }
-                    else {
-                        te.isInEditMode = false;
-                    }
+                    te.isInEditMode = false;
                     // Refresh the day
                     refreshDay(te.TimeIn);
                 })

@@ -263,9 +263,7 @@
                     if (resetBlankDay) {
                         resetBlankTimeEntry();
                     }
-                    else {
-                        te.isInEditMode = false;
-                    }
+                    te.isInEditMode = false;
                     // Refresh the day
                     refreshDay(te.TimeIn);
                 })

@@ -96,10 +96,10 @@
                 if (relativeTo) {
                     //var daysDiff = moment(datetime).dayOfYear() - moment(relativeTo).dayOfYear();
                     var daysDiff = moment(moment(datetime).startOf('day').diff(moment(relativeTo).startOf('day'), 'days'));
-                    if (daysDiff > 0) {
+                    if (Number(daysDiff) > 0) {
                         suffix = " (+" + daysDiff + ")";
                     }
-                    else if (daysDiff < 0) {
+                    else if (Number(daysDiff) < 0) {
                         suffix = " (" + daysDiff + ")";
                     }
                 }
@@ -250,18 +250,18 @@
                 var timepart = pieces[0].split(":");
                 // get this out of the way..
                 if (pieces[pieces.length - 1].toUpperCase() == 'PM') {
-                    timepart[0] = Number(timepart[0]) + 12;
+                    timepart[0] = (Number(timepart[0]) + 12).toString();
                 }
             }
             while (timepart.length < 2) {
-                timepart.push(0);
+                timepart.push('0');
             }
-            test = new Date(datepart[0], datepart[1] - 1, datepart[2], timepart[0], timepart[1]);
-            if (test == 'Invalid date') {
-                return test;
+            var testDate = (new Date(datepart[0], datepart[1] - 1, datepart[2], Number(timepart[0]), Number(timepart[1]))).toString();
+            if (testDate == 'Invalid Date') {
+                return testDate;
             }
             else {
-                return moment(test).format("YYYY-MM-DDTHH:mm:ss");
+                return moment(testDate).format("YYYY-MM-DDTHH:mm:ss");
             }
         }
         vm.beginEditEntry = function (te) {

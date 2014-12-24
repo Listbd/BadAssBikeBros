@@ -305,7 +305,7 @@
 
             test = new Date(datepart[0], datepart[1] - 1, datepart[2], timepart[0], timepart[1]);
 
-            if (test == 'Invalid date') {
+            if (test == 'Invalid Date') {
                 return test;
             }
             else {

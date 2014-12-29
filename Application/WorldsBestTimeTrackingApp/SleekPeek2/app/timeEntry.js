@@ -83,9 +83,7 @@
             };
         }
         // custom order by so days are from today into the past
-        vm.daysOrderBy = function (day) {
-            return -moment(day.dateDisplay);
-        };
+        vm.daysOrderBy = function (day) { return -moment(day.dateDisplay); };
         vm.formatDuration = function (dur) {
             var t = moment.duration(dur);
             return Math.floor(t.asHours()) + moment.utc(t.asMilliseconds()).format(":mm:ss");
@@ -303,10 +301,10 @@
                 return 0;
             }
         };
-        vm.onTimeInSet = function (newDate, oldDate, te) {
+        vm.onTimeInSet = function (newDate, te) {
             te.TimeIn = moment(newDate).format('YYYY-MM-DDTHH:mm:ss');
         };
-        vm.onTimeOutSet = function (newDate, oldDate, te) {
+        vm.onTimeOutSet = function (newDate, te) {
             te.TimeOut = moment(newDate).format('YYYY-MM-DDTHH:mm:ss');
         };
         // A bit ugly - refactor

@@ -42,7 +42,7 @@
                                                 </div>
                                             </a>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownTimeIn">
-                                                <datetimepicker data-ng-model="vm.blankTimeEntry.TimeIn" data-datetimepicker-config="{ startView: 'hour', dropdownSelector: '#dropdownTimeIn'}" data-on-set-time="vm.onTimeInSet(newDate, oldDate, vm.blankTimeEntry)" />
+                                                <datetimepicker data-ng-model="vm.blankTimeEntry.TimeIn" data-datetimepicker-config="{ startView: 'hour', dropdownSelector: '#dropdownTimeIn'}" data-on-set-time="vm.onTimeInSet(newDate, vm.blankTimeEntry)" />
                                             </ul>
                                         </div>
                                         <!--input class="form-control" type="dateTimeLocal" ng-model="vm.blankTimeEntry.TimeIn"></input></td>-->
@@ -58,7 +58,7 @@
                                                 </div>
                                             </a>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownTimeOut">
-                                                <datetimepicker data-ng-model="vm.blankTimeEntry.TimeOut" data-datetimepicker-config="{ startView: 'hour', dropdownSelector: '#dropdownTimeOut'}" data-on-set-time="vm.onTimeOutSet(newDate, oldDate, vm.blankTimeEntry)" />
+                                                <datetimepicker data-ng-model="vm.blankTimeEntry.TimeOut" data-datetimepicker-config="{ startView: 'hour', dropdownSelector: '#dropdownTimeOut'}" data-on-set-time="vm.onTimeOutSet(newDate, vm.blankTimeEntry)" />
                                             </ul>
                                         </div>
                                         <!--<input class="form-control" type="dateTimeLocal" ng-model="vm.blankTimeEntry.TimeOut"></input>-->
@@ -83,7 +83,7 @@
                                                 </div>
                                             </a>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown{{dayIdx}}{{teIdx}}In">
-                                                <datetimepicker data-ng-model="te.TimeIn" data-datetimepicker-config="{ startView: 'hour', dropdownSelector: '#dropdown{{dayIdx}}{{teIdx}}In'}" data-on-set-time="vm.onTimeInSet(newDate, oldDate, te)" />
+                                                <datetimepicker data-ng-model="te.TimeIn" data-datetimepicker-config="{ startView: 'hour', dropdownSelector: '#dropdown{{dayIdx}}{{teIdx}}In'}" data-on-set-time="vm.onTimeInSet(newDate, te)" />
                                             </ul>
                                         </div>
                                         <!--<input class="form-control" type="dateTimeLocal" ng-model="te.TimeIn" ui-keydown="{esc: 'vm.cancelEditEntry(te)'}" />-->
@@ -99,7 +99,7 @@
                                                 </div>
                                             </a>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown{{dayIdx}}{{teIdx}}Out">
-                                                <datetimepicker data-ng-model="te.TimeOut" data-datetimepicker-config="{ startView: 'hour', dropdownSelector: '#dropdown{{dayIdx}}{{teIdx}}Out'}" data-on-set-time="vm.onTimeOutSet(newDate, oldDate, te)" />
+                                                <datetimepicker data-ng-model="te.TimeOut" data-datetimepicker-config="{ startView: 'hour', dropdownSelector: '#dropdown{{dayIdx}}{{teIdx}}Out'}" data-on-set-time="vm.onTimeOutSet(newDate, te)" />
                                             </ul>
                                         </div>
                                         <!--<input class="form-control" type="dateTimeLocal" ng-model="te.TimeOut" />-->

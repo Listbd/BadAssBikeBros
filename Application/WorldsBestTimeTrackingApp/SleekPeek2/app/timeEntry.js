@@ -3,7 +3,6 @@
 (function () {
     'use strict';
     var controllerId = 'timeEntry'; // must match... what?
-    // ??? why can it not find the function when common is passed
     angular.module('app').controller(controllerId, ['common', 'timeTracking', '$routeParams', '$scope', timeEntry]);
     function timeEntry(common, timeTracking, $routeParams, $scope) {
         var getMsgFn = common.logger.getLogFn;
@@ -248,7 +247,7 @@
                 var timepart = pieces[0].split(":");
                 // get this out of the way..
                 if (pieces[pieces.length - 1].toUpperCase() == 'PM') {
-                    timepart[0] = (Number(timepart[0]) + 12).toString();
+                    timepart[0] = String((Number(timepart[0]) + 12));
                 }
             }
             while (timepart.length < 2) {

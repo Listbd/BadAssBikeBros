@@ -18,7 +18,6 @@ interface TimeEntry {
     'use strict';
     var controllerId = 'timeEntry'; // must match... what?
 
-    // ??? why can it not find the function when common is passed
     angular.module('app').controller(controllerId, ['common', 'timeTracking', '$routeParams', '$scope', timeEntry]);
 
     function timeEntry(common, timeTracking, $routeParams, $scope) {
@@ -41,8 +40,8 @@ interface TimeEntry {
 
             var promises = [getProjects(), updateTime()];
 
-            var daysToPull = 10;
-            for (var i = 0; i < daysToPull; i++)
+			var daysToPull = 10;
+			            for (var i = 0; i < daysToPull; i++)
             {
                 promises.push(getTimeEntriesForDate(moment(Date.now()).subtract(i, 'days').format('YYYY-MM-DD')));
             }
@@ -81,7 +80,7 @@ interface TimeEntry {
             vm.activeTimer = common.$timeout(updateTime, 1000, true);
         }
 
-        function getProjects() {
+        function getProjects(): ng.IPromise<void> {
             return timeTracking.getProjects()
                 .success(function (response) {
                     common.$timeout(function () {
@@ -137,7 +136,7 @@ interface TimeEntry {
                     else if (Number(daysDiff) < 0) {
                         suffix = " (" + daysDiff + ")";
                     }
-                }
+				}
                 return moment(datetime).format("h:mm A") + suffix;
             }
             else {
@@ -206,7 +205,7 @@ interface TimeEntry {
                 return null;
             });
         }
-
+		
         vm.stopWork = function (te: TimeEntry) {
             if (te.TimeOut === undefined || te.TimeOut === null || te.TimeOut.length == 0) {
                 te.TimeOut = moment(Date.now()).format("YYYY-MM-DDTHH:mm:ss");
@@ -310,7 +309,7 @@ interface TimeEntry {
                 var timepart = pieces[0].split(":");
                 // get this out of the way..
                 if (pieces[pieces.length - 1].toUpperCase() == 'PM') {
-                    timepart[0] = (Number(timepart[0]) + 12).toString();
+                    timepart[0] = String((Number(timepart[0]) + 12));
                 }
             }
             while (timepart.length < 2) {

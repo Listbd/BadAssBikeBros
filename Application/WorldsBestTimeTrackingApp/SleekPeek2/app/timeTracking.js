@@ -9,6 +9,7 @@
         var $http = common.$http;
         var $q = common.$q;
         var apiurl = "https://csgprohackathonapi.azurewebsites.net/api";
+        //var apiurl = "http://localhost:57214/api";
 
         var service = {
             getUser: getUser,
